@@ -1,38 +1,111 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.merka.pentaho.ext</groupId>
-  <artifactId>pentaho-authentication-ext</artifactId>
-  <version>0.1</version>
-  <packaging>jar</packaging>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.merka.pentaho.ext</groupId>
+	<artifactId>pentaho-authentication-ext</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
+
+	<properties>
 
 		<!-- Generic properties -->
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<pentaho.platform.version>5.0.1-stable</pentaho.platform.version>
 
 		<!-- Spring -->
-		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
+		<spring-framework.version>2.5.6</spring-framework.version>
+		<spring.security.core.version>2.0.5.RELEASE</spring.security.core.version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 
 	</properties>
-	
+
+	<repositories>
+		<repository>
+			<id>pentaho-omni</id>
+			<name>pentaho omni</name>
+			<url>http://repository.pentaho.org/content/groups/omni</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
-		<!-- Spring and Transactions -->
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-core</artifactId>
+	        <version>${spring.security.core.version}</version>
+	    </dependency>
 		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-core</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-api</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-repository</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-extensions</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-user-console</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -47,18 +120,18 @@
 			<scope>test</scope>
 		</dependency>
 
-		
 
-	</dependencies>	
+
+	</dependencies>
 	<build>
 		<plugins>
-	        <plugin>
-	            <artifactId>maven-compiler-plugin</artifactId>
-	            <configuration>
-	                <source>${java.version}</source>
-	                <target>${java.version}</target>
-	            </configuration>
-	        </plugin>
-	    </plugins>    
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

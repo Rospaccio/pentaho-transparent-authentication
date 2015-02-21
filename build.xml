@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pentaho-authentication-ext">
+	<description>Deploy utility for a development environment</description>
+	
+	<target name="fast-deploy">
+		<copy file="" todir="">
+			
+		</copy>
+	</target>
+	
+</project>
