@@ -52,6 +52,7 @@ public class ExtensionAuthenticationProvider implements AuthenticationProvider {
 		int i = 1;
 		for(GrantedAuthority originalAuth : authenticationRequest.getAuthorities()){
 			authorities[i] = new GrantedAuthorityImpl(originalAuth.getAuthority());
+			i += 1;
 		}
 		
 		UsernamePasswordAuthenticationToken authenticationOutcome = new UsernamePasswordAuthenticationToken(authenticationRequest.getPrincipal(), 
