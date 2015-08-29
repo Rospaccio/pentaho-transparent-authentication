@@ -23,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.merka.pentaho.ext.exception.UserNotFoundException;
@@ -144,7 +145,14 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 		if(currentAuthentication != null && currentAuthentication.isAuthenticated()){
 			return true;
 		}
-		// TODO: implement other conditions.
+		
+		String autologinParam = request.getParameter("autologin");
+		if(! "true".equals(autologinParam))
+		{
+			return true;
+		}
+		
+		// TODO: implement other conditions if appropriate.
 		return false;
 	}
 
