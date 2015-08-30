@@ -42,4 +42,14 @@ public class LoginTicketManager
 		
 		return removed;
 	}
+	
+//	public boolean getTicketById(String ticketId)
+//	{
+//		LoginTicket found = null;
+//		synchronized (tickets) 
+//		{
+//			found = tickets.get(ticketId);
+//		}
+//		return found;
+//	}
 }

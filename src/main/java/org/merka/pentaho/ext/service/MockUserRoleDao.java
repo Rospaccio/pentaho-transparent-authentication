@@ -1,5 +1,6 @@
 package org.merka.pentaho.ext.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.pentaho.platform.api.engine.security.userroledao.AlreadyExistsException;
@@ -9,6 +10,8 @@ import org.pentaho.platform.api.engine.security.userroledao.IUserRoleDao;
 import org.pentaho.platform.api.engine.security.userroledao.NotFoundException;
 import org.pentaho.platform.api.engine.security.userroledao.UncategorizedUserRoleDaoException;
 import org.pentaho.platform.api.mt.ITenant;
+import org.pentaho.platform.security.userroledao.PentahoRole;
+import org.pentaho.platform.security.userroledao.PentahoUser;
 
 public class MockUserRoleDao implements IUserRoleDao {
 
@@ -41,8 +44,7 @@ public class MockUserRoleDao implements IUserRoleDao {
 
 	@Override
 	public IPentahoUser getUser(ITenant tenant, String name) throws UncategorizedUserRoleDaoException {
-		// TODO Auto-generated method stub
-		return null;
+		return new PentahoUser(name);
 	}
 
 	@Override
@@ -131,8 +133,10 @@ public class MockUserRoleDao implements IUserRoleDao {
 
 	@Override
 	public List<IPentahoRole> getUserRoles(ITenant tenant, String userName) throws UncategorizedUserRoleDaoException {
-		// TODO Auto-generated method stub
-		return null;
+		PentahoRole role = new PentahoRole("Administrator");
+		ArrayList<IPentahoRole> roles = new ArrayList<>();
+		roles.add(role);
+		return roles;
 	}
 
 }

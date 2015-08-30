@@ -42,8 +42,8 @@ import org.springframework.security.ui.FilterChainOrder;
 import org.springframework.security.ui.SpringSecurityFilter;
 import org.springframework.security.ui.WebAuthenticationDetails;
 
-public class AuthenticationExtensionFilter extends SpringSecurityFilter implements InitializingBean {
-
+public class AuthenticationExtensionFilter extends SpringSecurityFilter implements InitializingBean 
+{
 	public static final String AUTOLOGIN_PARAM_NAME = "autologin";
 
 	private static final Log log = LogFactory.getLog(AuthenticationExtensionFilter.class);
@@ -93,7 +93,8 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 	{
 				try
 				{
-					if(mustIgnore(request)){
+					if(mustIgnore(request))
+					{
 						return;
 					}
 										
@@ -108,13 +109,15 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 						log.warn("Requesting username is not available, continuing with the filter chain");
 					}
 				}
-				catch(NoClassDefFoundError e){
+				catch(NoClassDefFoundError e)
+				{
 					log.error("An error occurred during the authentication process", e);
 				}
-				catch(Exception ex){
+				catch(Exception ex)
+				{
 					log.error("an exception occurred duringthe authentication process", ex);
 				}
-				finally{
+				finally {
 					filterChain.doFilter(request, response);
 				}
 	}
