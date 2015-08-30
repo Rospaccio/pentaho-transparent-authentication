@@ -44,6 +44,8 @@ import org.springframework.security.ui.WebAuthenticationDetails;
 
 public class AuthenticationExtensionFilter extends SpringSecurityFilter implements InitializingBean {
 
+	public static final String AUTOLOGIN_PARAM_NAME = "autologin";
+
 	private static final Log log = LogFactory.getLog(AuthenticationExtensionFilter.class);
 	
 	private UsernameProvider usernameProvider;
@@ -146,7 +148,7 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 			return true;
 		}
 		
-		String autologinParam = request.getParameter("autologin");
+		String autologinParam = request.getParameter(AUTOLOGIN_PARAM_NAME);
 		if(! "true".equals(autologinParam))
 		{
 			return true;
