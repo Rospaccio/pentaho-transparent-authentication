@@ -151,7 +151,7 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 				}
 				catch(Exception ex)
 				{
-					log.error("an exception occurred duringthe authentication process", ex);
+					log.error("an exception occurred during the authentication process", ex);
 				}
 				finally {
 					filterChain.doFilter(request, response);
