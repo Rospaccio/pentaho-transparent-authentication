@@ -23,11 +23,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.merka.pentaho.ext.exception.UserNotFoundException;
 import org.merka.pentaho.ext.security.ExtensionAuthenticationToken;
 import org.merka.pentaho.ext.service.UsernameProvider;
+import org.merka.pentaho.ext.ticket.LoginTicket;
+import org.merka.pentaho.ext.ticket.LoginTicketManager;
 import org.pentaho.platform.api.engine.security.userroledao.IPentahoRole;
 import org.pentaho.platform.api.engine.security.userroledao.IPentahoUser;
 import org.pentaho.platform.api.engine.security.userroledao.IUserRoleDao;
@@ -52,6 +55,7 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 	private UsernameProvider usernameProvider;
 	private IUserRoleDao userRoleDao;
 	private AuthenticationManager authenticationManager;
+	private LoginTicketManager loginTicketManager;
 	
 	public UsernameProvider getUsernameProvider() {
 		return usernameProvider;
@@ -77,6 +81,16 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 		this.authenticationManager = authenticationManager;
 	}
 
+	
+	
+	public LoginTicketManager getLoginTicketManager() {
+		return loginTicketManager;
+	}
+
+	public void setLoginTicketManager(LoginTicketManager loginTicketManager) {
+		this.loginTicketManager = loginTicketManager;
+	}
+
 	@Override
 	public int getOrder() {
 		return FilterChainOrder.AUTHENTICATION_PROCESSING_FILTER;
@@ -98,6 +112,27 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 					{
 						return;
 					}
+					
+					String ticketId = request.getParameter(TICKET_PARAM_NAME);
+					if(StringUtils.isEmpty(ticketId))
+					{
+						throw new IllegalArgumentException("The required parameter " + TICKET_PARAM_NAME + " is not set");
+					}
+					
+					// checks with the ticket manager whether the ticket is valid
+					LoginTicket ticket = null;
+					
+					try 
+					{
+						ticket = loginTicketManager.removeTicket(ticketId);
+					} 
+					catch (Exception e) 
+					{
+						throw e;
+					}
+					
+					// TODO: read app name and username from the ticket object and search for 
+					// the pentaho user mapped to those parameters.
 										
 					// gets the username of the user that is requesting authentication
 					String requestingUserName = getUsernameProvider().getUsername();

@@ -1,11 +1,11 @@
 package org.merka.pentaho.ext.web;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.merka.pentaho.ext.ticket.LoginTicket;
@@ -28,11 +28,12 @@ public class AuthenticationExtensionFilterTest {
 	
 	@Autowired
 	LoginTicketManager loginTicketManager;
-	
+
 	@Test
-	@Ignore
 	public void testDoFilter() throws IOException, ServletException
 	{
+		assertNotNull(loginTicketManager);
+		
 		//makes the ticket manager issue a ticket
 		LoginTicket ticket = loginTicketManager.generateNewTicket("test", "externalTestUser");
 		String ticketId = ticket.getIdAsString();

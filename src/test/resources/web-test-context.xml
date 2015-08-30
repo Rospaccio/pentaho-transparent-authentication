@@ -16,6 +16,7 @@
 		<property name="usernameProvider" ref="usernameProvider"></property>
 		<property name="userRoleDao" ref="userRoleDao"></property>
 		<property name="authenticationManager" ref="authenticationManager"></property>
+		<property name="loginTicketManager" ref="loginTicketManager"></property>
 	</bean>
 	
 	<bean id="loginTicketGeneratorFilter" class="org.merka.pentaho.ext.web.LoginTicketGeneratorFilter">

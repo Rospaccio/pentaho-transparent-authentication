@@ -17,6 +17,8 @@
 
 	<bean id="authenticationExtensionProvider" class="org.merka.pentaho.ext.security.ExtensionAuthenticationProvider">
 	</bean>
+	
+	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton"></bean>
 
 	<!-- ======================== AUTHENTICATION ======================= -->
 	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
@@ -44,9 +46,8 @@
 		<property name="authenticationManager">
 			<ref bean="authenticationManager" />
 		</property>
+		<property name="loginTicketManager" ref="loginTicketManager"></property>
 	</bean>
-	
-	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton"></bean>
 	
 	<bean id="loginTicketGeneratorFilter" class="org.merka.pentaho.ext.web.LoginTicketGeneratorFilter">
 		<property name="loginTicketManager" ref="loginTicketManager"></property>
