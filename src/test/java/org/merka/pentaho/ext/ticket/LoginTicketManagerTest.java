@@ -20,7 +20,7 @@ public class LoginTicketManagerTest {
 	public void testCreateNewTicket() throws LoginTicketNotFoundException 
 	{
 		assertNotNull(manager);
-		LoginTicket ticket = manager.generateNewTicket();
+		LoginTicket ticket = manager.generateNewTicket("test", "testUser");
 		assertNotNull(ticket);
 		assertFalse(ticket.isExpired());
 		
@@ -28,6 +28,8 @@ public class LoginTicketManagerTest {
 		assertEquals(ticket.getId(), removed.getId());
 		assertEquals(ticket.getIdAsString(), removed.getIdAsString());
 		assertEquals(ticket.getCreationTime(), removed.getCreationTime());
+		assertEquals(ticket.getRequistingApplication(), removed.getRequistingApplication());
+		assertEquals(ticket.getRequestingApplicationUsername(), removed.getRequestingApplicationUsername());
 		assertEquals(ticket.getValidityDuration(), removed.getValidityDuration());
 	}
 }

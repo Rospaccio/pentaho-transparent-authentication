@@ -17,6 +17,8 @@ import org.springframework.web.util.HtmlUtils;
 public class LoginTicketGeneratorFilter extends SpringSecurityFilter 
 {
 	public static final String GENERATE_TICKET_PARAM_NAME = "generate-ticket";
+	public static final String REQUESTING_APP_PARAM_NAME = "app";
+	public static final String REQUESTING_USERNAME_PARAM_NAME = "username";
 	
 	LoginTicketManager loginTicketManager;
 	
@@ -40,7 +42,21 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		String ticketParameter = request.getParameter(GENERATE_TICKET_PARAM_NAME);
 		if(! StringUtils.isEmpty(ticketParameter))
 		{
-			LoginTicket ticket = getLoginTicketManager().generateNewTicket();
+			String appName = request.getParameter(REQUESTING_APP_PARAM_NAME);
+			if(StringUtils.isEmpty(appName))
+			{
+				sendError(response, "Required parameter " + REQUESTING_APP_PARAM_NAME + " is not set");
+				return;
+			}
+			
+			String username = request.getParameter(REQUESTING_USERNAME_PARAM_NAME);
+			if(StringUtils.isEmpty(username))
+			{
+				sendError(response, "Required parameter " + REQUESTING_USERNAME_PARAM_NAME + " is not set");
+				return;
+			}
+			
+			LoginTicket ticket = getLoginTicketManager().generateNewTicket(appName, username);
 			response.getWriter().write("{\"ticketId\": \"" + ticket.getIdAsString() + "\"}");
 			response.flushBuffer();
 			return;
@@ -49,6 +65,12 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		{
 			chain.doFilter(request, response);
 		}
+	}
+	
+	private void sendError(HttpServletResponse response, String message) throws IOException
+	{
+		response.sendError(500, message);
+		response.flushBuffer();
 	}
 
 }

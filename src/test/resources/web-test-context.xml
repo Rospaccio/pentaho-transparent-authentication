@@ -10,9 +10,12 @@
 	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.MockUsernameProvider"></bean>
 	<bean id="userRoleDao" class="org.merka.pentaho.ext.service.MockUserRoleDao"></bean>
 
+	<bean id="authenticationManager" class="org.merka.pentaho.ext.security.MockAuthenticationManager"></bean>
+
 	<bean id="authFilter" class="org.merka.pentaho.ext.web.AuthenticationExtensionFilter">
 		<property name="usernameProvider" ref="usernameProvider"></property>
 		<property name="userRoleDao" ref="userRoleDao"></property>
+		<property name="authenticationManager" ref="authenticationManager"></property>
 	</bean>
 	
 	<bean id="loginTicketGeneratorFilter" class="org.merka.pentaho.ext.web.LoginTicketGeneratorFilter">

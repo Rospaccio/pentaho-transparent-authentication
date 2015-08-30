@@ -12,11 +12,13 @@ public class LoginTicketTest {
 	{
 		int validity = 10;
 		DateTime start = new DateTime();
-		LoginTicket ticket = LoginTicket.newTicket(validity);
+		LoginTicket ticket = LoginTicket.newTicket(validity, "test", "testUser");
 		DateTime end = new DateTime();
 		
 		assertNotNull(ticket);
 		assertEquals(validity, ticket.getValidityDuration().getStandardSeconds());
+		assertEquals("test", ticket.getRequistingApplication());
+		assertEquals("testUser", ticket.getRequestingApplicationUsername());
 		assertTrue(ticket.getCreationTime().compareTo(start) >= 0);
 		assertTrue(ticket.getCreationTime().compareTo(end) <= 0);
 	}
@@ -26,7 +28,7 @@ public class LoginTicketTest {
 	{
 		int validity = 0;
 		DateTime start = new DateTime();
-		LoginTicket ticket = LoginTicket.newTicket(validity);
+		LoginTicket ticket = LoginTicket.newTicket(validity, "test", "testUser");
 		Thread.sleep(5);
 		DateTime end = new DateTime();
 		

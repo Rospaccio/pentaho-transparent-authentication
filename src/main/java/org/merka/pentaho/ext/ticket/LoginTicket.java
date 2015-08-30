@@ -12,6 +12,14 @@ public class LoginTicket {
 	private UUID id;
 	private DateTime creationTime;
 	private Duration validityDuration;
+	/**
+	 * The name of the external application requesting the ticket. It can be an arbitrary string.
+	 */
+	private String requistingApplication;
+	/**
+	 * The username (in the requesting application) of the user for which the ticket is issued.
+	 */
+	private String requestingApplicationUsername;
 	
 	public UUID getId() {
 		return id;
@@ -38,19 +46,38 @@ public class LoginTicket {
 		this.validityDuration = validityDuration;
 	}
 
-	private LoginTicket(UUID id, DateTime creationtime, Duration validityDuration)
+	public String getRequistingApplication() {
+		return requistingApplication;
+	}
+
+	public void setRequistingApplication(String requistingApplication) {
+		this.requistingApplication = requistingApplication;
+	}
+
+	public String getRequestingApplicationUsername() {
+		return requestingApplicationUsername;
+	}
+
+	public void setRequestingApplicationUsername(String requestingApplicationUsername) {
+		this.requestingApplicationUsername = requestingApplicationUsername;
+	}
+
+	private LoginTicket(UUID id, DateTime creationtime, Duration validityDuration, 
+			String requestingApplication, String requestingApplicationUsername)
 	{
 		this.id = id;
 		this.setCreationTime(creationtime);
 		this.setValidityDuration(validityDuration);
+		setRequistingApplication(requestingApplication);
+		setRequestingApplicationUsername(requestingApplicationUsername);
 	}
 
-	public static LoginTicket newTicket(int validityTimeSeconds)
+	public static LoginTicket newTicket(int validityTimeSeconds, String requestingApplication, String requestingApplicationUsername)
 	{
 		UUID id = UUID.randomUUID();
 		Duration duration = new Duration(validityTimeSeconds * SECONDS_MILLIS_RATIO);
 		DateTime creationTime = new DateTime();
-		LoginTicket ticket = new LoginTicket(id, creationTime, duration);
+		LoginTicket ticket = new LoginTicket(id, creationTime, duration, requestingApplication, requestingApplicationUsername);
 		return ticket;
 	}
 	

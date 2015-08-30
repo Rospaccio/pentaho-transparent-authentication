@@ -20,7 +20,7 @@
 		<spring.security.core.version>2.0.5.RELEASE</spring.security.core.version>
 
 		<!-- Test -->
-		<junit.version>4.11</junit.version>
+		<junit.version>4.4</junit.version>
 		<jackson.version>2.6.1</jackson.version>
 
 	</properties>

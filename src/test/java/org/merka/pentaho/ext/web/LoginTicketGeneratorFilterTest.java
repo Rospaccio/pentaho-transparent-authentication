@@ -35,10 +35,13 @@ public class LoginTicketGeneratorFilterTest {
 		MockFilterChain chain = new MockFilterChain();
 		
 		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_APP_PARAM_NAME, "test");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_USERNAME_PARAM_NAME, "testUser");
 		
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 		
 		assertNotNull(response);
+		assertEquals(200, response.getStatus());
 		String content = response.getContentAsString();
 		assertNotNull(content);
 		
@@ -51,6 +54,34 @@ public class LoginTicketGeneratorFilterTest {
 		TextNode textNode = (TextNode)valueNode;
 		UUID uuid = new UUID(textNode.textValue());
 		assertNotNull(uuid);
+	}
+	
+	@Test
+	public void testDofilterNoParam() throws IOException, ServletException
+	{
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		MockFilterChain chain = new MockFilterChain();
+		
+		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_APP_PARAM_NAME, "test");
+		
+		loginTicketGeneratorFilter.doFilter(request, response, chain);
+		
+		assertNotNull(response);
+		assertEquals(500, response.getStatus());
+		
+		request = new MockHttpServletRequest();
+		response = new MockHttpServletResponse();
+		chain = new MockFilterChain();
+		
+		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_USERNAME_PARAM_NAME, "testUser");
+		
+		loginTicketGeneratorFilter.doFilter(request, response, chain);
+		
+		assertNotNull(response);
+		assertEquals(500, response.getStatus());
 	}
 
 }

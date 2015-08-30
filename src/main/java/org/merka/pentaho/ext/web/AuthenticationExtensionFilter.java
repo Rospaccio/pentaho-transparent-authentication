@@ -23,7 +23,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.merka.pentaho.ext.exception.UserNotFoundException;
@@ -47,6 +46,8 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 	public static final String AUTOLOGIN_PARAM_NAME = "autologin";
 
 	private static final Log log = LogFactory.getLog(AuthenticationExtensionFilter.class);
+
+	public static final String TICKET_PARAM_NAME = "ticket";
 	
 	private UsernameProvider usernameProvider;
 	private IUserRoleDao userRoleDao;

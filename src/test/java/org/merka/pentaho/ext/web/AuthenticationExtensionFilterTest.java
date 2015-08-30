@@ -5,12 +5,17 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.merka.pentaho.ext.ticket.LoginTicket;
+import org.merka.pentaho.ext.ticket.LoginTicketManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,19 +26,30 @@ public class AuthenticationExtensionFilterTest {
 	@Autowired
 	AuthenticationExtensionFilter authFilter;
 	
+	@Autowired
+	LoginTicketManager loginTicketManager;
+	
 	@Test
-	public void testTicketCreationRequest() throws IOException, ServletException
+	@Ignore
+	public void testDoFilter() throws IOException, ServletException
 	{
+		//makes the ticket manager issue a ticket
+		LoginTicket ticket = loginTicketManager.generateNewTicket("test", "externalTestUser");
+		String ticketId = ticket.getIdAsString();
+		
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		MockFilterChain chain = new MockFilterChain();
 		
 		request.addParameter(AuthenticationExtensionFilter.AUTOLOGIN_PARAM_NAME, "true");
-		request.addParameter("generate-ticket", "1");
+		request.addParameter(AuthenticationExtensionFilter.TICKET_PARAM_NAME, ticketId);
 		
 		authFilter.doFilter(request, response, chain);
 		String content = response.getContentAsString();
 		assertNotNull(content);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		assertNotNull(auth);
 	}
 	
 }
