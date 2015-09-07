@@ -7,7 +7,7 @@
 
 	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager"></bean>
 
-	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.MockUsernameProvider"></bean>
+	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.IdentityUsernameProvider"></bean>
 	<bean id="userRoleDao" class="org.merka.pentaho.ext.service.MockUserRoleDao"></bean>
 
 	<bean id="authenticationManager" class="org.merka.pentaho.ext.security.MockAuthenticationManager"></bean>

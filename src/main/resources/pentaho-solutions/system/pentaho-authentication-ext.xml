@@ -12,7 +12,7 @@
 		<property name="placeholderPrefix" value="$ext{"></property>
 	</bean>
 
-	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.MockUsernameProvider">
+	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.IdentityUsernameProvider">
 	</bean>
 
 	<bean id="authenticationExtensionProvider" class="org.merka.pentaho.ext.security.ExtensionAuthenticationProvider">

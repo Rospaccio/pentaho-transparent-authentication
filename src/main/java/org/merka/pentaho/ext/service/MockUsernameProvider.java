@@ -15,10 +15,11 @@
 
 package org.merka.pentaho.ext.service;
 
-public class MockUsernameProvider implements UsernameProvider {
-
+public class MockUsernameProvider implements UsernameProvider
+{
 	@Override
-	public String getUsername() {
+	public String getUsername(String externalApplicationName, String externalUsername)
+	{
 		return "admin";
 	}
 

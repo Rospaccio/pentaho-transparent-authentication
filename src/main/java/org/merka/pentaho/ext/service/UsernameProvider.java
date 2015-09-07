@@ -18,9 +18,12 @@ package org.merka.pentaho.ext.service;
 public interface UsernameProvider {
 
 	/**
-	 * Gets the Pentaho user that has to be authenticated
-	 * @return
+	 * Gets the Pentaho username, if any exists, that corresponds to the <code>externalUsername</code>
+	 * of the requesting application.
+	 * @param externalApplicationName the arbitrary name, as it is know to this pentaho-authentication-ext module, of an external application.
+	 * @param externalUsername The username (in the external application) of the user to log in.
+	 * @return The username of the Pentaho account corresponding to the external username.
 	 */
-	public String getUsername();
+	public String getUsername(String externalApplicationName, String externalUsername);
 	
 }

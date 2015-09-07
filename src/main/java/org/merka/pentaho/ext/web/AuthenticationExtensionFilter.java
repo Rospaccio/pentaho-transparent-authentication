@@ -44,155 +44,172 @@ import org.springframework.security.ui.FilterChainOrder;
 import org.springframework.security.ui.SpringSecurityFilter;
 import org.springframework.security.ui.WebAuthenticationDetails;
 
-public class AuthenticationExtensionFilter extends SpringSecurityFilter implements InitializingBean 
+public class AuthenticationExtensionFilter extends SpringSecurityFilter implements InitializingBean
 {
 	public static final String AUTOLOGIN_PARAM_NAME = "autologin";
 
 	private static final Log log = LogFactory.getLog(AuthenticationExtensionFilter.class);
 
 	public static final String TICKET_PARAM_NAME = "ticket";
-	
+
 	private UsernameProvider usernameProvider;
 	private IUserRoleDao userRoleDao;
 	private AuthenticationManager authenticationManager;
 	private LoginTicketManager loginTicketManager;
-	
-	public UsernameProvider getUsernameProvider() {
+
+	public UsernameProvider getUsernameProvider()
+	{
 		return usernameProvider;
 	}
 
-	public void setUsernameProvider(UsernameProvider usernameProvider) {
+	public void setUsernameProvider(UsernameProvider usernameProvider)
+	{
 		this.usernameProvider = usernameProvider;
 	}
 
-	public IUserRoleDao getUserRoleDao() {
+	public IUserRoleDao getUserRoleDao()
+	{
 		return userRoleDao;
 	}
 
-	public void setUserRoleDao(IUserRoleDao userRoleDao) {
+	public void setUserRoleDao(IUserRoleDao userRoleDao)
+	{
 		this.userRoleDao = userRoleDao;
 	}
 
-	public AuthenticationManager getAuthenticationManager() {
+	public AuthenticationManager getAuthenticationManager()
+	{
 		return authenticationManager;
 	}
 
-	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+	public void setAuthenticationManager(AuthenticationManager authenticationManager)
+	{
 		this.authenticationManager = authenticationManager;
 	}
 
-	
-	
-	public LoginTicketManager getLoginTicketManager() {
+	public LoginTicketManager getLoginTicketManager()
+	{
 		return loginTicketManager;
 	}
 
-	public void setLoginTicketManager(LoginTicketManager loginTicketManager) {
+	public void setLoginTicketManager(LoginTicketManager loginTicketManager)
+	{
 		this.loginTicketManager = loginTicketManager;
 	}
 
 	@Override
-	public int getOrder() {
+	public int getOrder()
+	{
 		return FilterChainOrder.AUTHENTICATION_PROCESSING_FILTER;
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		
+	public void afterPropertiesSet() throws Exception
+	{
+
 	}
 
 	@Override
-	protected void doFilterHttp(HttpServletRequest request,
-			HttpServletResponse response, FilterChain filterChain) throws IOException,
-			ServletException 
+	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws IOException, ServletException
 	{
-				try
-				{
-					if(mustIgnore(request))
-					{
-						return;
-					}
-					
-					String ticketId = request.getParameter(TICKET_PARAM_NAME);
-					if(StringUtils.isEmpty(ticketId))
-					{
-						throw new IllegalArgumentException("The required parameter " + TICKET_PARAM_NAME + " is not set");
-					}
-					
-					// checks with the ticket manager whether the ticket is valid
-					LoginTicket ticket = null;
-					
-					try 
-					{
-						ticket = loginTicketManager.removeTicket(ticketId);
-					} 
-					catch (Exception e) 
-					{
-						throw e;
-					}
-					
-					// TODO: read app name and username from the ticket object and search for 
-					// the pentaho user mapped to those parameters.
-										
-					// gets the username of the user that is requesting authentication
-					String requestingUserName = getUsernameProvider().getUsername();
-					if(requestingUserName != null && !"".equals(requestingUserName))
-					{
-						authenticateUser(requestingUserName, request);
-					}
-					else
-					{
-						log.warn("Requesting username is not available, continuing with the filter chain");
-					}
-				}
-				catch(NoClassDefFoundError e)
-				{
-					log.error("An error occurred during the authentication process", e);
-				}
-				catch(Exception ex)
-				{
-					log.error("an exception occurred during the authentication process", ex);
-				}
-				finally {
-					filterChain.doFilter(request, response);
-				}
+		try
+		{
+			if (mustIgnore(request))
+			{
+				return;
+			}
+
+			String ticketId = request.getParameter(TICKET_PARAM_NAME);
+			if (StringUtils.isEmpty(ticketId))
+			{
+				throw new IllegalArgumentException("The required parameter " + TICKET_PARAM_NAME + " is not set");
+			}
+
+			// checks with the ticket manager whether the ticket is valid
+			LoginTicket ticket = null;
+
+			try
+			{
+				ticket = loginTicketManager.removeTicket(ticketId);
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+
+			// TODO: read app name and username from the ticket object and
+			// search for
+			// the pentaho user mapped to those parameters.
+
+			// gets the username of the user that is requesting authentication
+			String requestingUserName = getUsernameProvider().getUsername(ticket.getRequistingApplication(), ticket.getRequestingApplicationUsername());
+			if (requestingUserName != null && !"".equals(requestingUserName))
+			{
+				authenticateUser(requestingUserName, request);
+			}
+			else
+			{
+				log.warn("Requesting username is not available, continuing with the filter chain");
+			}
+		}
+		catch (NoClassDefFoundError e)
+		{
+			log.error("An error occurred during the authentication process", e);
+		}
+		catch (Exception ex)
+		{
+			log.error("an exception occurred during the authentication process", ex);
+		}
+		finally
+		{
+			filterChain.doFilter(request, response);
+		}
 	}
 
-	private void authenticateUser(String requestingUserName, HttpServletRequest request) throws UserNotFoundException 
+	private void authenticateUser(String requestingUserName, HttpServletRequest request) throws UserNotFoundException
 	{
 		IPentahoUser user = getUserRoleDao().getUser(null, requestingUserName);
-		if(user == null){
-			// TODO: implement alternative behavior if needed, e.g. create the user if 
+		if (user == null)
+		{
+			// TODO: implement alternative behavior if needed, e.g. create the
+			// user if
 			// it does not exist
-			throw new UserNotFoundException("User '" + requestingUserName + "' not found in the current system using the default UserRoleDao bean");
+			throw new UserNotFoundException("User '" + requestingUserName
+					+ "' not found in the current system using the default UserRoleDao bean");
 		}
-		
+
 		List<IPentahoRole> roles = getUserRoleDao().getUserRoles(null, requestingUserName);
 		GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
 		int index = 0;
-		for(IPentahoRole role : roles){
+		for (IPentahoRole role : roles)
+		{
 			authorities[index] = new GrantedAuthorityImpl(role.getName());
 		}
-		ExtensionAuthenticationToken authRequestToken = new ExtensionAuthenticationToken(requestingUserName, null, authorities);
+		ExtensionAuthenticationToken authRequestToken = new ExtensionAuthenticationToken(requestingUserName, null,
+				authorities);
 		authRequestToken.setDetails(new WebAuthenticationDetails(request));
 		Authentication authenticationOutcome = getAuthenticationManager().authenticate(authRequestToken);
-		
-		// TODO: manage possible errors (authenticationOutcome == null, Exception, etc...)
+
+		// TODO: manage possible errors (authenticationOutcome == null,
+		// Exception, etc...)
 		SecurityContextHolder.getContext().setAuthentication(authenticationOutcome);
 	}
 
-	private boolean mustIgnore(HttpServletRequest request) {
+	private boolean mustIgnore(HttpServletRequest request)
+	{
 		Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
-		if(currentAuthentication != null && currentAuthentication.isAuthenticated()){
-			return true;
-		}
-		
-		String autologinParam = request.getParameter(AUTOLOGIN_PARAM_NAME);
-		if(! "true".equals(autologinParam))
+		if (currentAuthentication != null && currentAuthentication.isAuthenticated())
 		{
 			return true;
 		}
-		
+
+		String autologinParam = request.getParameter(AUTOLOGIN_PARAM_NAME);
+		if (!"true".equals(autologinParam))
+		{
+			return true;
+		}
+
 		// TODO: implement other conditions if appropriate.
 		return false;
 	}
