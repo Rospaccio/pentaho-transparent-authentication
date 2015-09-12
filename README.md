@@ -39,16 +39,20 @@ the line hilighted below to add the extension authentication beans in the Spring
 ### Usage
 An external application can request a login ticket to pentaho with a URL of the following form:
 
-    http://<pentho-base>/pentaho/Login?generate-ticket=1&app=test&username=admin
+      http://<pentho-base>/pentaho/Login?generate-ticket=1&app=test&username=admin
 
 The request must carry 3 parameters:
 
 1. `generate-ticket` => tells the `LoginTicketFilterGenerator` to issue a login ticket and register it in the internal cache managed by the **pentaho-authentication-ext** plugin. The ticket is return in the body of the response as JSON with the following format:
 
-    {"ticketId": "199817ae-20bf-41e1-8548-a366f99e2377"}
+        {"ticketId": "199817ae-20bf-41e1-8548-a366f99e2377"}
 
 2. `app`: the arbitrary name of the application requesting the login ticket. The name must be known to **pentaho-authentication-ext** i.e. it must be present in the current configuration of the plugin.
 
 3. `username`: the username of the user to log in. It must be mapped to a pentaho username in the internal configuration of **pentaho-authentication-ext**.
 
-Once the ticket is issued, it is valid for a certain amount of time and it can be used by a request sent by the user's browser to flawlessly  log in to pentaho.
+Once the external app has received the ticket, it can send a redirect response to the user's browser with a redirect URL in the following form:
+
+      http://localhost:8080/pentaho/Home?autologin=true&ticket=857495f2-cd2c-4638-baf0-de71aacce714
+
+Once the ticket is issued, it is valid for a certain amount of time (configurable in `pentaho-authentication-ext.properties`) and it can be used by a request sent by the user's browser to flawlessly log in to pentaho.
