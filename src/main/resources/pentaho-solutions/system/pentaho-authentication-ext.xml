@@ -18,7 +18,9 @@
 	<bean id="authenticationExtensionProvider" class="org.merka.pentaho.ext.security.ExtensionAuthenticationProvider">
 	</bean>
 	
-	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton"></bean>
+	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton">
+		<property name="ticketValiditySeconds" value="$ext{ticket.validity.duration.seconds}"></property>
+	</bean>
 
 	<!-- ======================== AUTHENTICATION ======================= -->
 	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">

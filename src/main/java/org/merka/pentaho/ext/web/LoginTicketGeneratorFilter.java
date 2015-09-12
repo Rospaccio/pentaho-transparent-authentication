@@ -14,6 +14,11 @@ import org.springframework.security.ui.FilterChainOrder;
 import org.springframework.security.ui.SpringSecurityFilter;
 import org.springframework.web.util.HtmlUtils;
 
+/**
+ * A filter that issues login tickets.
+ * @author merka
+ *
+ */
 public class LoginTicketGeneratorFilter extends SpringSecurityFilter 
 {
 	public static final String GENERATE_TICKET_PARAM_NAME = "generate-ticket";
