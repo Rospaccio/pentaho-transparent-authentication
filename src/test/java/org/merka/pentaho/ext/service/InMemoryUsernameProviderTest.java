@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Test;
@@ -70,4 +73,18 @@ public class InMemoryUsernameProviderTest
 		assertEquals("pentaho4", pentahoUser);
 	}
 
+	@Test
+	public void testLoadJsonMappings() throws JsonParseException, JsonMappingException, IOException
+	{
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("mappings.json");
+		assertNotNull(stream);
+		
+		InMemoryUsernameProvider provider = new InMemoryUsernameProvider();
+		provider.loadJsonMappings(stream);
+		
+		String pentahoUser = provider.getUsername("showcase", "user0.3");
+		assertNotNull(pentahoUser);
+		assertEquals("tiffany", pentahoUser);
+	}
+	
 }
