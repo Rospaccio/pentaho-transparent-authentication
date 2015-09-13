@@ -3,8 +3,8 @@ package org.merka.pentaho.ext.security;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.AuthenticationManager;
-import org.springframework.security.GrantedAuthority;
 
+@SuppressWarnings("unused")
 public class MockAuthenticationManager implements AuthenticationManager {
 
 	@Override

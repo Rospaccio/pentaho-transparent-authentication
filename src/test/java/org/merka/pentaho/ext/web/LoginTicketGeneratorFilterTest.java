@@ -1,11 +1,14 @@
 package org.merka.pentaho.ext.web;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.netbeans.mdr.persistence.btreeimpl.btreestorage.UUID;
@@ -15,10 +18,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.TextNode;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/web-test-context.xml"})
@@ -50,9 +49,9 @@ public class LoginTicketGeneratorFilterTest {
 		assertNotNull(node.get("ticketId"));
 		JsonNode valueNode = node.findPath("ticketId");
 		assertNotNull(valueNode);
-		assertTrue(valueNode instanceof TextNode);
-		TextNode textNode = (TextNode)valueNode;
-		UUID uuid = new UUID(textNode.textValue());
+
+
+		UUID uuid = new UUID(valueNode.asText());
 		assertNotNull(uuid);
 	}
 	

@@ -6,8 +6,11 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.merka.pentaho.ext.service.InMemoryUsernameProvider;
 import org.merka.pentaho.ext.ticket.LoginTicket;
 import org.merka.pentaho.ext.ticket.LoginTicketManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,21 @@ public class AuthenticationExtensionFilterTest {
 	
 	@Autowired
 	LoginTicketManager loginTicketManager;
+	
+	@Autowired 
+	InMemoryUsernameProvider usernameProvider;
 
+	@Before
+	public void addUsernameMappings(){
+		usernameProvider.addMapping("test", "externalTestUser", "admin");
+	}
+	
+	@After
+	public void removeUserMappings()
+	{
+		usernameProvider.removeMapping("test", "externalTestUser");
+	}
+	
 	@Test
 	public void testDoFilter() throws IOException, ServletException
 	{

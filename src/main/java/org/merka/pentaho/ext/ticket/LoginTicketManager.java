@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.merka.pentaho.ext.exception.LoginTicketNotFoundException;
-import org.pentaho.platform.util.logging.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoginTicketManager

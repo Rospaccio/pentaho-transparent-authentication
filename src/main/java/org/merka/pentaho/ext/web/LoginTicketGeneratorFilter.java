@@ -12,7 +12,6 @@ import org.merka.pentaho.ext.ticket.LoginTicket;
 import org.merka.pentaho.ext.ticket.LoginTicketManager;
 import org.springframework.security.ui.FilterChainOrder;
 import org.springframework.security.ui.SpringSecurityFilter;
-import org.springframework.web.util.HtmlUtils;
 
 /**
  * A filter that issues login tickets.

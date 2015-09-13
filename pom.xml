@@ -21,7 +21,7 @@
 
 		<!-- Test -->
 		<junit.version>4.4</junit.version>
-		<jackson.version>2.6.1</jackson.version>
+		<jackson.version>1.9.3</jackson.version>
 
 	</properties>
 
@@ -57,6 +57,12 @@
 			<artifactId>joda-time</artifactId>
 			<version>${pentaho.5.4.joda-time.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 
 
@@ -127,24 +133,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
 			<scope>test</scope>
 		</dependency>
 
