@@ -17,6 +17,19 @@ import org.slf4j.LoggerFactory;
 public class InMemoryUsernameProvider implements UsernameProvider
 {
 	private static final Logger logger = LoggerFactory.getLogger(InMemoryUsernameProvider.class);
+	
+	public String initFileLocation;
+	
+	public String getInitFileLocation()
+	{
+		return initFileLocation;
+	}
+
+	public void setInitFileLocation(String initFileLocation)
+	{
+		this.initFileLocation = initFileLocation;
+	}
+
 	private Map<String, ApplicationMappings> applicationsMap;
 
 	public Map<String, ApplicationMappings> getApplicationsMap()
@@ -144,4 +157,13 @@ public class InMemoryUsernameProvider implements UsernameProvider
 		}
 	}
 
+	public void initFromConfiguration() throws JsonParseException, JsonMappingException, IOException{
+		loadJsonMappingsFromFile(getInitFileLocation());
+	}
+	
+	public void loadJsonMappingsFromFile(String fileName) throws JsonParseException, JsonMappingException, IOException
+	{
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+		loadJsonMappings(stream);
+	}
 }
