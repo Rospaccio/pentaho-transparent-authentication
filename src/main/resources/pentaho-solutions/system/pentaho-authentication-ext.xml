@@ -12,7 +12,9 @@
 		<property name="placeholderPrefix" value="$ext{"></property>
 	</bean>
 
-	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.IdentityUsernameProvider">
+	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.InMemoryUsernameProvider"
+		init-method="initFromConfiguration">
+		<property name="initFileLocation" value="$ext{mappings.init.file}"></property>
 	</bean>
 
 	<bean id="authenticationExtensionProvider" class="org.merka.pentaho.ext.security.ExtensionAuthenticationProvider">

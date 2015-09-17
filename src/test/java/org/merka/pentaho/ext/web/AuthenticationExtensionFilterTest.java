@@ -40,7 +40,7 @@ public class AuthenticationExtensionFilterTest {
 		usernameProvider.addMapping("test", "externalTestUser", "admin");
 	}
 	
-	@After
+	//@After
 	public void removeUserMappings()
 	{
 		usernameProvider.removeMapping("test", "externalTestUser");

@@ -173,8 +173,7 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 		if (user == null)
 		{
 			// TODO: implement alternative behavior if needed, e.g. create the
-			// user if
-			// it does not exist
+			// user if it does not exist
 			throw new UserNotFoundException("User '" + requestingUserName
 					+ "' not found in the current system using the default UserRoleDao bean");
 		}

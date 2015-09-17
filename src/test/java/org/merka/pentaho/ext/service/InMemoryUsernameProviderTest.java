@@ -87,4 +87,15 @@ public class InMemoryUsernameProviderTest
 		assertEquals("tiffany", pentahoUser);
 	}
 	
+	@Test
+	public void testLoadJsonMappingsFromFile() throws JsonParseException, JsonMappingException, IOException
+	{
+		String filename = "mappings.json";
+		inMemoryProvider.loadJsonMappingsFromFile(filename);
+		
+		String pentahoUser = inMemoryProvider.getUsername("showcase", "user0.3");
+		assertNotNull(pentahoUser);
+		assertEquals("tiffany", pentahoUser);
+	}
+	
 }
