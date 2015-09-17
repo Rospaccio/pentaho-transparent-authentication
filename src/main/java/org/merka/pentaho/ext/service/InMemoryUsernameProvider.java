@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -13,13 +14,14 @@ import org.codehaus.jackson.type.TypeReference;
 import org.merka.pentaho.ext.exception.MappingNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 
 public class InMemoryUsernameProvider implements UsernameProvider
 {
 	private static final Logger logger = LoggerFactory.getLogger(InMemoryUsernameProvider.class);
-	
+
 	public String initFileLocation;
-	
+
 	public String getInitFileLocation()
 	{
 		return initFileLocation;
@@ -104,9 +106,7 @@ public class InMemoryUsernameProvider implements UsernameProvider
 	 */
 	public String removeMapping(String app, String externalUsername)
 	{
-
-		return null;
-
+		throw new IllegalStateException("Not implemented!");
 	}
 
 	public String toJson() throws JsonGenerationException, JsonMappingException, IOException
@@ -143,27 +143,49 @@ public class InMemoryUsernameProvider implements UsernameProvider
 				readCount = reader.read(buffer, offset, length);
 				builder.append(buffer, offset, readCount);
 			}
-			while(readCount == length);
-			
+			while (readCount == length);
+
 			logger.info("json = " + builder);
 			loadJsonMappings(builder.toString());
 		}
 		finally
 		{
-			if(stream != null)
+			if (stream != null)
 			{
 				stream.close();
 			}
 		}
 	}
 
-	public void initFromConfiguration() throws JsonParseException, JsonMappingException, IOException{
-		loadJsonMappingsFromFile(getInitFileLocation());
+	public void initFromConfiguration() throws JsonParseException, JsonMappingException, IOException
+	{
+		logger.info("\n\n\n" + getInitFileLocation() + "\n\n\n");
+		loadJsonMappingsFromFile(getInitFileLocation());		
 	}
-	
+
 	public void loadJsonMappingsFromFile(String fileName) throws JsonParseException, JsonMappingException, IOException
 	{
-		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+		InputStream stream = null;
+		try
+		{
+			stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+		}
+		catch (Throwable th)
+		{
+			logger.error("Error", th);
+		}
 		loadJsonMappings(stream);
 	}
+
+	// @Override
+	// public void afterPropertiesSet() throws Exception
+	// {
+	// if(StringUtils.isBlank(getInitFileLocation()))
+	// {
+	// throw new javax.jms.IllegalStateException("Mandatory property
+	// 'initFileLocation' is blank");
+	// }
+	//
+	// initFromConfiguration();
+	// }
 }
