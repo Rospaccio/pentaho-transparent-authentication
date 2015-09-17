@@ -1,11 +1,12 @@
 package org.merka.pentaho.ext.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -14,7 +15,6 @@ import org.codehaus.jackson.type.TypeReference;
 import org.merka.pentaho.ext.exception.MappingNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 public class InMemoryUsernameProvider implements UsernameProvider
 {
@@ -165,16 +165,16 @@ public class InMemoryUsernameProvider implements UsernameProvider
 
 	public void loadJsonMappingsFromFile(String fileName) throws JsonParseException, JsonMappingException, IOException
 	{
-		InputStream stream = null;
+		String text = null;
 		try
 		{
-			stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+			text = FileUtils.readFileToString(new File(fileName));
 		}
 		catch (Throwable th)
 		{
 			logger.error("Error", th);
 		}
-		loadJsonMappings(stream);
+		loadJsonMappings(text);
 	}
 
 	// @Override
