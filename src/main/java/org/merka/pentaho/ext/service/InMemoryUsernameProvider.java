@@ -168,24 +168,15 @@ public class InMemoryUsernameProvider implements UsernameProvider
 		String text = null;
 		try
 		{
-			text = FileUtils.readFileToString(new File(fileName));
+			File file = new File(fileName);
+			text = FileUtils.readFileToString(file);
 		}
-		catch (Throwable th)
+		catch (Exception e)
 		{
-			logger.error("Error", th);
+			logger.error("Error", e);
+			//TODO: decide how to manage this exception
+			throw e;
 		}
 		loadJsonMappings(text);
 	}
-
-	// @Override
-	// public void afterPropertiesSet() throws Exception
-	// {
-	// if(StringUtils.isBlank(getInitFileLocation()))
-	// {
-	// throw new javax.jms.IllegalStateException("Mandatory property
-	// 'initFileLocation' is blank");
-	// }
-	//
-	// initFromConfiguration();
-	// }
 }

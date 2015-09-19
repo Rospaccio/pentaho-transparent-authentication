@@ -3,7 +3,7 @@
 	<description>Deploy utility for a development environment</description>
 	<property file="build.properties"></property>
 	<target name="fast-deploy">
-		<copy file="${mvn.target.dir}/pentaho-authentication-ext-0.1.jar" todir="${pentaho.webapp.webinf.lib}">
+		<copy file="${mvn.target.dir}/pentaho-authentication-ext-0.1.jar" todir="${pentaho.webapp.webinf.lib}" overwrite="true">
 		</copy>
 		<copy todir="${pentaho.system.dir}" overwrite="true">
 			<fileset dir="${mvn.target.system.dir}"></fileset>
