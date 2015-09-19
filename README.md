@@ -46,7 +46,7 @@ An external application can request a login ticket to pentaho with a URL of the 
 
 The request must carry 3 parameters:
 
-1. `generate-ticket`: tells the `LoginTicketFilterGenerator` to issue a login ticket and register it in the internal cache managed by the **pentaho-authentication-ext** plugin. The ticket is return in the body of the response as JSON with the following format:
+1. `generate-ticket`: tells the login ticket generator to issue a login ticket and register it in the internal cache managed by the **pentaho-authentication-ext** plugin. The ticket is return in the body of the response as JSON with the following format:
 
         {"ticketId": "199817ae-20bf-41e1-8548-a366f99e2377"}
 
@@ -59,3 +59,40 @@ Once the external app has received the ticket, it can send a redirect response t
       http://<pentaho-base>/pentaho/Home?autologin=true&ticket=857495f2-cd2c-4638-baf0-de71aacce714
 
 Once the ticket is issued, it is valid for a certain amount of time (configurable in `pentaho-authentication-ext.properties`) and it can be used by a request sent by the user's browser to flawlessly log in to pentaho.
+
+### Configuration
+The external application and the corresponding users that are allowed to use the mechanism can be configured in a file called mapping.json that must be placed in $PENTAHO-ROOT/pentaho-solutions/system. The file must comply to the following format:
+
+		{
+		    "testApp": {
+		        "usernamesMap": {
+		            "testUser": "pentahoUser"
+		        },
+		        "applicationName": "testApp"
+		    },
+		    "app1": {
+		        "usernamesMap": {
+		            "user0.1": "pentaho4",
+		            "user0.0": "pentaho3"
+		        },
+		        "applicationName": "app1"
+		    },
+		    "showcase": {
+		        "usernamesMap": {
+		            "user0.2": "admin",
+		            "user0.1": "pat",
+		            "user0.0": "suzy",
+		            "user0.3": "tiffany"
+		        },
+		        "applicationName": "showcase"
+		    }
+		}  
+
+For security reasons, any request for a login ticket must respect some form of mutual authentication between the two peers involved (the "external app" and Pentaho). Currently, for this purpose, it is assumed that request parameter authentication is enabled in Pentaho.
+Every request for a ticket must carry the authentication parameters, so the complete format should be something like the following:
+
+		http://<pentaho-base>/pentaho/Login?userid=admin&password=password&generate-ticket=1&app=showcase&username=user0.2
+
+
+### Compatibility
+pentaho-authentication-ext is currently compatible with Pentaho BI v. 5.4 and 6 (the preview release).
