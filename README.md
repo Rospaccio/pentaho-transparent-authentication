@@ -1,4 +1,4 @@
-## pentaho-authentication-ext
+## pentaho-authentication-ext [![Build Status](https://travis-ci.org/Rospaccio/pentaho-authentication-ext.svg?branch=pentaho-5.4)](https://travis-ci.org/Rospaccio/pentaho-authentication-ext)
 ### Authentication extension mechanism for Pentaho Business Intelligence Server
 
 **pentaho-authentication-ext** is a plugin for Pentaho BI Server that provides the platform with additional
