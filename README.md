@@ -1,5 +1,5 @@
 ## pentaho-authentication-ext
-### Authentication extension mechanism for Penthao Business Intelligence Server
+### Authentication extension mechanism for Pentaho Business Intelligence Server
 
 **pentaho-authentication-ext** is a plugin for Pentaho BI Server that provides the platform with additional
 authentication and login capabilities, in the form of a
@@ -11,9 +11,9 @@ between Alfresco and Pentaho through the AAAR solution.
 ### Setup (manual process, installer is yet to come...)
 
 1. Edit `pentaho-spring-beans.xml` in `$PENTAHO-ROOT/pentaho-solutions/system` and add
-the line hilighted below to add the extension authentication beans in the Spring context:
+the line highlighted below to add the extension authentication beans in the Spring context:
 
-
+		...
 		<!-- fragment of pentaho-spring-beans.xml -->
 		<import resource="pentahoSystemConfig.xml" />
 		<import resource="adminPlugins.xml" />
@@ -21,14 +21,17 @@ the line hilighted below to add the extension authentication beans in the Spring
 		<import resource="repository.spring.xml" />
 		<import resource="applicationContext-spring-security.xml" />
 
-		<!-- Autologin support through pentaho-authentication-ext -->
+		<!-- Addition for pentaho-authentication-ext - Start. -->
 		<import resource="pentaho-authentication-ext.xml" />
+		<!-- Addition for pentaho-authentication-ext - End. -->
 
+		<!-- fragment of pentaho-spring-beans.xml -->
 		<import resource="applicationContext-spring-security-superuser.xml" />  
 		<import resource="applicationContext-pentaho-security-superuser.xml" />
 
 		<import resource="applicationContext-common-authorization.xml" />
 		<import resource="applicationContext-spring-security-memory.xml" />
+		...
 
 2. Copy `pentaho-authentication-ext.properties` and `pentaho-authentication-ext.xml` to
 `$PENTAHO-ROOT/pentaho-solutions/system`.
