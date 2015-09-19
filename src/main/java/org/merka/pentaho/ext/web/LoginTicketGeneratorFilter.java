@@ -8,8 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.merka.pentaho.ext.ticket.LoginTicket;
 import org.merka.pentaho.ext.ticket.LoginTicketManager;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.ui.FilterChainOrder;
 import org.springframework.security.ui.SpringSecurityFilter;
 
@@ -20,6 +23,8 @@ import org.springframework.security.ui.SpringSecurityFilter;
  */
 public class LoginTicketGeneratorFilter extends SpringSecurityFilter 
 {
+	private static final Log log = LogFactory.getLog(LoginTicketGeneratorFilter.class);
+	
 	public static final String GENERATE_TICKET_PARAM_NAME = "generate-ticket";
 	public static final String REQUESTING_APP_PARAM_NAME = "app";
 	public static final String REQUESTING_USERNAME_PARAM_NAME = "username";
@@ -46,6 +51,12 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		String ticketParameter = request.getParameter(GENERATE_TICKET_PARAM_NAME);
 		if(! StringUtils.isEmpty(ticketParameter))
 		{
+			if(SecurityContextHolder.getContext().getAuthentication() == null)
+			{
+				log.error("No authentication found: authentication is mandatory for this filter to process the request!");
+				// TODO: no auth present: send an error response.
+				return;
+			}
 			String appName = request.getParameter(REQUESTING_APP_PARAM_NAME);
 			if(StringUtils.isEmpty(appName))
 			{

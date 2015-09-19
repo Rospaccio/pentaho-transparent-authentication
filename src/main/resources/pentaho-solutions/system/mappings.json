@@ -1,0 +1,24 @@
+{
+    "testApp": {
+        "usernamesMap": {
+            "testUser": "pentahoUser"
+        },
+        "applicationName": "testApp"
+    },
+    "app1": {
+        "usernamesMap": {
+            "user0.1": "pentaho4",
+            "user0.0": "pentaho3"
+        },
+        "applicationName": "app1"
+    },
+    "showcase": {
+        "usernamesMap": {
+            "user0.2": "admin",
+            "user0.1": "pat",
+            "user0.0": "suzy",
+            "user0.3": "tiffany"
+        },
+        "applicationName": "showcase"
+    }
+}

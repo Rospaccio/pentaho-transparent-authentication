@@ -1,10 +1,12 @@
 package org.merka.pentaho.ext.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -17,6 +19,19 @@ import org.slf4j.LoggerFactory;
 public class InMemoryUsernameProvider implements UsernameProvider
 {
 	private static final Logger logger = LoggerFactory.getLogger(InMemoryUsernameProvider.class);
+
+	public String initFileLocation;
+
+	public String getInitFileLocation()
+	{
+		return initFileLocation;
+	}
+
+	public void setInitFileLocation(String initFileLocation)
+	{
+		this.initFileLocation = initFileLocation;
+	}
+
 	private Map<String, ApplicationMappings> applicationsMap;
 
 	public Map<String, ApplicationMappings> getApplicationsMap()
@@ -91,9 +106,7 @@ public class InMemoryUsernameProvider implements UsernameProvider
 	 */
 	public String removeMapping(String app, String externalUsername)
 	{
-
-		return null;
-
+		throw new IllegalStateException("Not implemented!");
 	}
 
 	public String toJson() throws JsonGenerationException, JsonMappingException, IOException
@@ -130,18 +143,40 @@ public class InMemoryUsernameProvider implements UsernameProvider
 				readCount = reader.read(buffer, offset, length);
 				builder.append(buffer, offset, readCount);
 			}
-			while(readCount == length);
-			
+			while (readCount == length);
+
 			logger.info("json = " + builder);
 			loadJsonMappings(builder.toString());
 		}
 		finally
 		{
-			if(stream != null)
+			if (stream != null)
 			{
 				stream.close();
 			}
 		}
 	}
 
+	public void initFromConfiguration() throws JsonParseException, JsonMappingException, IOException
+	{
+		logger.info("\n\n\n" + getInitFileLocation() + "\n\n\n");
+		loadJsonMappingsFromFile(getInitFileLocation());		
+	}
+
+	public void loadJsonMappingsFromFile(String fileName) throws JsonParseException, JsonMappingException, IOException
+	{
+		String text = null;
+		try
+		{
+			File file = new File(fileName);
+			text = FileUtils.readFileToString(file);
+		}
+		catch (Exception e)
+		{
+			logger.error("Error", e);
+			//TODO: decide how to manage this exception
+			throw e;
+		}
+		loadJsonMappings(text);
+	}
 }

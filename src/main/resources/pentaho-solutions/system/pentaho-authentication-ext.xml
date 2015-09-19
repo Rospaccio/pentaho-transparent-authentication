@@ -12,7 +12,9 @@
 		<property name="placeholderPrefix" value="$ext{"></property>
 	</bean>
 
-	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.IdentityUsernameProvider">
+	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.InMemoryUsernameProvider"
+		init-method="initFromConfiguration">
+		<property name="initFileLocation" value="$ext{mappings.init.file}"></property>
 	</bean>
 
 	<bean id="authenticationExtensionProvider" class="org.merka.pentaho.ext.security.ExtensionAuthenticationProvider">
@@ -63,7 +65,7 @@
 		        /webservices/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
 		        /api/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
 		        /plugin/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
-		        /**=loginTicketGeneratorFilter,securityContextHolderAwareRequestFilter,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,httpSessionReuseDetectionFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor]]>
+		        /**=securityContextHolderAwareRequestFilter,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,httpSessionReuseDetectionFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,loginTicketGeneratorFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor]]>
 			</value>
 		</property>
 	</bean>
