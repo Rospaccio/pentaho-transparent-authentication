@@ -61,7 +61,7 @@ Once the external app has received the ticket, it can send a redirect response t
 Once the ticket is issued, it is valid for a certain amount of time (configurable in `pentaho-authentication-ext.properties`) and it can be used by a request sent by the user's browser to flawlessly log in to pentaho.
 
 ### Configuration
-The external application and the corresponding users that are allowed to use the mechanism can be configured in a file called mapping.json that must be placed in $PENTAHO-ROOT/pentaho-solutions/system. The file must comply to the following format:
+The external applications and the corresponding users that are allowed to use the mechanism can be configured in a file called mapping.json that must be placed in $PENTAHO-ROOT/pentaho-solutions/system. The file must comply to the following format:
 
 		{
 		    "testApp": {
@@ -91,8 +91,8 @@ The external application and the corresponding users that are allowed to use the
 For security reasons, any request for a login ticket must respect some form of mutual authentication between the two peers involved (the "external app" and Pentaho). Currently, for this purpose, it is assumed that request parameter authentication is enabled in Pentaho.
 Every request for a ticket must carry the authentication parameters, so the complete format should be something like the following:
 
-		http://<pentaho-base>/pentaho/Login?userid=admin&password=password&generate-ticket=1&app=showcase&username=user0.2
+    http://<pentaho-base>/pentaho/Login?userid=admin&password=password&generate-ticket=1&app=showcase&username=user0.2
 
 
 ### Compatibility
-pentaho-authentication-ext is currently compatible with Pentaho BI v. 5.4 and 6 (the preview release).
+pentaho-authentication-ext is currently compatible with Pentaho BI v. 5.4 and 6 (preview release).

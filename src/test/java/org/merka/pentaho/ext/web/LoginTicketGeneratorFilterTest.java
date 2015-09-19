@@ -11,11 +11,15 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.merka.pentaho.ext.security.MockAuthenticationManager;
 import org.netbeans.mdr.persistence.btreeimpl.btreestorage.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -36,6 +40,10 @@ public class LoginTicketGeneratorFilterTest {
 		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
 		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_APP_PARAM_NAME, "test");
 		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_USERNAME_PARAM_NAME, "testUser");
+		
+		// Adds an authentication in the SecurityContext, in order to simulate the 
+		// work of the requestParametersAuthenticationFilter
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("test", "test"));
 		
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 		
@@ -64,6 +72,10 @@ public class LoginTicketGeneratorFilterTest {
 		
 		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
 		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_APP_PARAM_NAME, "test");
+		
+		// Adds an authentication in the SecurityContext, in order to simulate the 
+		// work of the requestParametersAuthenticationFilter
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("test", "test"));
 		
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 		
