@@ -115,54 +115,62 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 	{
 		try
 		{
-			if (mustIgnore(request))
+			if (!mustIgnore(request))
 			{
-				return;
-			}
 
-			String ticketId = request.getParameter(TICKET_PARAM_NAME);
-			if (StringUtils.isEmpty(ticketId))
-			{
-				throw new IllegalArgumentException("The required parameter " + TICKET_PARAM_NAME + " is not set");
-			}
+				String ticketId = request.getParameter(TICKET_PARAM_NAME);
+				if (StringUtils.isEmpty(ticketId))
+				{
+					throw new IllegalArgumentException("The required parameter " + TICKET_PARAM_NAME + " is not set");
+				}
 
-			// checks with the ticket manager whether the ticket is valid
-			LoginTicket ticket = null;
+				// checks with the ticket manager whether the ticket is valid
+				LoginTicket ticket = null;
 
-			try
-			{
-				ticket = loginTicketManager.removeTicket(ticketId);
-			}
-			catch (Exception e)
-			{
-				throw e;
-			}
+				try
+				{
+					ticket = loginTicketManager.removeTicket(ticketId);
+				}
+				catch (Exception e)
+				{
+					throw e;
+				}
 
-			// TODO: read app name and username from the ticket object and
-			// search for
-			// the pentaho user mapped to those parameters.
+				// TODO: read app name and username from the ticket object and
+				// search for
+				// the pentaho user mapped to those parameters.
 
-			// gets the username of the user that is requesting authentication
-			String requestingUserName = getUsernameProvider().getUsername(ticket.getRequistingApplication(), ticket.getRequestingApplicationUsername());
-			if (requestingUserName != null && !"".equals(requestingUserName))
-			{
-				authenticateUser(requestingUserName, request);
+				// gets the username of the user that is requesting
+				// authentication
+				String requestingUserName = getUsernameProvider().getUsername(ticket.getRequistingApplication(),
+						ticket.getRequestingApplicationUsername());
+				if (requestingUserName != null && !"".equals(requestingUserName))
+				{
+					authenticateUser(requestingUserName, request);
+				}
+				else
+				{
+					log.warn("Requesting username is not available, continuing with the filter chain");
+				}
+				String rebuiltURL = request.getRequestURL() + "?" + request.getQueryString();
+				logger.info("request URI = " + rebuiltURL);
+				String refinedURI = rebuiltURL.replace("autologin=true&", "");
+				logger.info("redirect URI = " + refinedURI);
+				response.sendRedirect(refinedURI);
 			}
 			else
 			{
-				log.warn("Requesting username is not available, continuing with the filter chain");
+				filterChain.doFilter(request, response);
 			}
 		}
 		catch (NoClassDefFoundError e)
 		{
 			log.error("An error occurred during the authentication process", e);
+			filterChain.doFilter(request, response);
 		}
 		catch (Exception ex)
 		{
 			log.error("an exception occurred during the authentication process", ex);
-		}
-		finally
-		{
 			filterChain.doFilter(request, response);
 		}
 	}

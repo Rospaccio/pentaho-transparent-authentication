@@ -51,12 +51,13 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		String ticketParameter = request.getParameter(GENERATE_TICKET_PARAM_NAME);
 		if(! StringUtils.isEmpty(ticketParameter))
 		{
-			if(SecurityContextHolder.getContext().getAuthentication() == null)
-			{
-				log.error("No authentication found: authentication is mandatory for this filter to process the request!");
-				// TODO: no auth present: send an error response.
-				return;
-			}
+//			if(SecurityContextHolder.getContext().getAuthentication() == null)
+//			{
+//				log.error("No authentication found: authentication is mandatory for this filter to process the request!");
+//				// TODO: no auth present: send an error response.
+//				return;
+//			}
+			
 			String appName = request.getParameter(REQUESTING_APP_PARAM_NAME);
 			if(StringUtils.isEmpty(appName))
 			{
