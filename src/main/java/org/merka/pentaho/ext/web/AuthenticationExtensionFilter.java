@@ -113,11 +113,10 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException
 	{
-		try
+		if (!mustIgnore(request))
 		{
-			if (!mustIgnore(request))
+			try
 			{
-
 				String ticketId = request.getParameter(TICKET_PARAM_NAME);
 				if (StringUtils.isEmpty(ticketId))
 				{
@@ -154,23 +153,26 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 				}
 				String rebuiltURL = request.getRequestURL() + "?" + request.getQueryString();
 				logger.info("request URI = " + rebuiltURL);
+				// TODO: build this URL in a safer way, possibly.
 				String refinedURI = rebuiltURL.replace("autologin=true&", "");
-				logger.info("redirect URI = " + refinedURI);
+				logger.info("redirect URI = " + refinedURI);				
+				// Why a redirect? it is the best way to deal with unwanted 
+				// filter chain's interaction when acccessing URL behind /plugin, /api, etc...
 				response.sendRedirect(refinedURI);
 			}
-			else
+			catch (NoClassDefFoundError e)
 			{
+				log.error("An error occurred during the authentication process", e);
+				filterChain.doFilter(request, response);
+			}
+			catch (Exception ex)
+			{
+				log.error("An exception occurred during the authentication process", ex);
 				filterChain.doFilter(request, response);
 			}
 		}
-		catch (NoClassDefFoundError e)
+		else
 		{
-			log.error("An error occurred during the authentication process", e);
-			filterChain.doFilter(request, response);
-		}
-		catch (Exception ex)
-		{
-			log.error("an exception occurred during the authentication process", ex);
 			filterChain.doFilter(request, response);
 		}
 	}

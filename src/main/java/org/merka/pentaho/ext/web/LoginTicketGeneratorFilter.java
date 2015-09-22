@@ -73,6 +73,7 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 			}
 			
 			LoginTicket ticket = getLoginTicketManager().generateNewTicket(appName, username);
+			// TODO: employee a cleaner way to output JSON, maybe?
 			response.getWriter().write("{\"ticketId\": \"" + ticket.getIdAsString() + "\"}");
 			response.flushBuffer();
 			return;
