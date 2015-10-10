@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.merka.pentaho.ext.exception.ExternalAppNotMappedException;
 import org.merka.pentaho.ext.service.InMemoryUsernameProvider;
 import org.merka.pentaho.ext.ticket.LoginTicket;
 import org.merka.pentaho.ext.ticket.LoginTicketManager;
@@ -47,7 +48,7 @@ public class AuthenticationExtensionFilterTest {
 	}
 	
 	@Test
-	public void testDoFilter() throws IOException, ServletException
+	public void testDoFilter() throws IOException, ServletException, ExternalAppNotMappedException
 	{
 		assertNotNull(loginTicketManager);
 		

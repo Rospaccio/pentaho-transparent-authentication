@@ -23,4 +23,10 @@ public class MockUsernameProvider implements UsernameProvider
 		return "admin";
 	}
 
+	@Override
+	public boolean isAppNameMapped(String externalAppName)
+	{
+		return true;
+	}
+
 }

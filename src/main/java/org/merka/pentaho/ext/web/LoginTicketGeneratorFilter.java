@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.merka.pentaho.ext.exception.ExternalAppNotMappedException;
+import org.merka.pentaho.ext.service.UsernameProvider;
 import org.merka.pentaho.ext.ticket.LoginTicket;
 import org.merka.pentaho.ext.ticket.LoginTicketManager;
 import org.springframework.security.context.SecurityContextHolder;
@@ -30,6 +32,7 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 	public static final String REQUESTING_USERNAME_PARAM_NAME = "username";
 	
 	LoginTicketManager loginTicketManager;
+	UsernameProvider usernameProvider;
 	
 	public LoginTicketManager getLoginTicketManager() {
 		return loginTicketManager;
@@ -37,6 +40,16 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 
 	public void setLoginTicketManager(LoginTicketManager loginTicketManager) {
 		this.loginTicketManager = loginTicketManager;
+	}
+	
+	public UsernameProvider getUsernameProvider()
+	{
+		return usernameProvider;
+	}
+
+	public void setUsernameProvider(UsernameProvider usernameProvider)
+	{
+		this.usernameProvider = usernameProvider;
 	}
 
 	@Override
@@ -51,12 +64,13 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		String ticketParameter = request.getParameter(GENERATE_TICKET_PARAM_NAME);
 		if(! StringUtils.isEmpty(ticketParameter))
 		{
-//			if(SecurityContextHolder.getContext().getAuthentication() == null)
-//			{
-//				log.error("No authentication found: authentication is mandatory for this filter to process the request!");
-//				// TODO: no auth present: send an error response.
-//				return;
-//			}
+			if(SecurityContextHolder.getContext().getAuthentication() == null)
+			{
+				log.error("No authentication found: authentication is mandatory to process the request!");
+				sendError(response, "No authentication found: authentication is mandatory to process the request!");
+				response.flushBuffer();
+				return;
+			}
 			
 			String appName = request.getParameter(REQUESTING_APP_PARAM_NAME);
 			if(StringUtils.isEmpty(appName))
@@ -71,9 +85,18 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 				sendError(response, "Required parameter " + REQUESTING_USERNAME_PARAM_NAME + " is not set");
 				return;
 			}
-			
-			LoginTicket ticket = getLoginTicketManager().generateNewTicket(appName, username);
-			// TODO: employee a cleaner way to output JSON, maybe?
+						
+			LoginTicket ticket = null;
+			try
+			{
+				ticket = getLoginTicketManager().generateNewTicket(appName, username);
+			}
+			catch(ExternalAppNotMappedException e)
+			{
+				sendError(response, "Application name '" + appName + "' was not found in the current Pentaho mappings");
+				return;
+			}
+			// TODO: use a cleaner way to output JSON, maybe?
 			response.getWriter().write("{\"ticketId\": \"" + ticket.getIdAsString() + "\"}");
 			response.flushBuffer();
 			return;

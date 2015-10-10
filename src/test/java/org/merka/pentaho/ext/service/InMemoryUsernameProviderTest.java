@@ -98,4 +98,10 @@ public class InMemoryUsernameProviderTest
 		assertEquals("tiffany", pentahoUser);
 	}
 	
+//	@Test
+//	public void testIsAppNameMapped()
+//	{
+//		boolean result = inMemoryProvider.is
+//	}
+
 }

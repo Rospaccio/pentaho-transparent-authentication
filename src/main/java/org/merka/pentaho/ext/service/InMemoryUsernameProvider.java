@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -178,5 +179,17 @@ public class InMemoryUsernameProvider implements UsernameProvider
 			throw e;
 		}
 		loadJsonMappings(text);
+	}
+
+	@Override
+	public boolean isAppNameMapped(String externalAppName)
+	{
+		if(StringUtils.isBlank(externalAppName))
+		{
+			return false;
+		}
+		
+		ApplicationMappings mapping = getApplicationsMap().get(externalAppName);
+		return mapping != null;
 	}
 }

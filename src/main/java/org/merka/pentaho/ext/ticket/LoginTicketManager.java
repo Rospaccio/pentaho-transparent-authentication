@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.merka.pentaho.ext.exception.ExternalAppNotMappedException;
 import org.merka.pentaho.ext.exception.LoginTicketNotFoundException;
+import org.merka.pentaho.ext.service.UsernameProvider;
 import org.slf4j.LoggerFactory;
 
 public class LoginTicketManager
@@ -16,6 +18,7 @@ public class LoginTicketManager
 	private Map<String, LoginTicket> tickets;
 
 	private int ticketValiditySeconds;
+	private UsernameProvider usernameProvider;
 
 	public int getTicketValiditySeconds()
 	{
@@ -25,6 +28,16 @@ public class LoginTicketManager
 	public void setTicketValiditySeconds(int ticketValiditySeconds)
 	{
 		this.ticketValiditySeconds = ticketValiditySeconds;
+	}
+	
+	public UsernameProvider getUsernameProvider()
+	{
+		return usernameProvider;
+	}
+
+	public void setUsernameProvider(UsernameProvider usernameProvider)
+	{
+		this.usernameProvider = usernameProvider;
 	}
 
 	public LoginTicketManager()
@@ -42,14 +55,24 @@ public class LoginTicketManager
 	 *            The username (in the requesting application) of the user for
 	 *            which the ticket is issued.
 	 * @return The newly created {@code LoginTicket}.
+	 * @throws ExternalAppNotMappedException 
 	 */
-	public LoginTicket generateNewTicket(String requestingApplicationName, String requestingApplicationUsername)
+	public LoginTicket generateNewTicket(String requestingApplicationName, String requestingApplicationUsername) throws ExternalAppNotMappedException
 	{
 		if (getTicketValiditySeconds() <= 0)
 		{
 			logger.warn("WARN! ticket validity is <= 0 [value = " + getTicketValiditySeconds() + "]");
 		}
+		
+		// TODO: is this ok here?
 		// deleteExpired();
+		
+		// checks if the provided external app name is mapped to something internally
+		if(!getUsernameProvider().isAppNameMapped(requestingApplicationName))
+		{
+			throw new ExternalAppNotMappedException(requestingApplicationName);
+		}
+		
 		LoginTicket ticket = LoginTicket.newTicket(getTicketValiditySeconds(), requestingApplicationName,
 				requestingApplicationUsername);
 		synchronized (this.tickets)
