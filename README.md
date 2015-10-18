@@ -21,9 +21,9 @@ the line highlighted below to add the extension authentication beans in the Spri
 		<import resource="repository.spring.xml" />
 		<import resource="applicationContext-spring-security.xml" />
 
-		<!-- Addition for pentaho-authentication-ext - Start. -->
-		<import resource="pentaho-authentication-ext.xml" />
-		<!-- Addition for pentaho-authentication-ext - End. -->
+		<!-- Addition for pentaho-transparent-authentication - Start. -->
+		<import resource="pentaho-transparent-authentication.xml" />
+		<!-- Addition for pentaho-transparent-authentication - End. -->
 
 		<!-- fragment of pentaho-spring-beans.xml -->
 		<import resource="applicationContext-spring-security-superuser.xml" />  

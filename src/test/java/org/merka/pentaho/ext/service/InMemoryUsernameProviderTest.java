@@ -76,7 +76,7 @@ public class InMemoryUsernameProviderTest
 	@Test
 	public void testLoadJsonMappings() throws JsonParseException, JsonMappingException, IOException
 	{
-		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("mappings.json");
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("pentaho-transparent-authentication-mappings.json");
 		assertNotNull(stream);
 		
 		InMemoryUsernameProvider provider = new InMemoryUsernameProvider();
@@ -90,7 +90,7 @@ public class InMemoryUsernameProviderTest
 	@Test
 	public void testLoadJsonMappingsFromFile() throws JsonParseException, JsonMappingException, IOException
 	{
-		String filename = "src/test/resources/mappings.json";
+		String filename = "src/test/resources/pentaho-transparent-authentication-mappings.json";
 		inMemoryProvider.loadJsonMappingsFromFile(filename);
 		
 		String pentahoUser = inMemoryProvider.getUsername("showcase", "user0.3");

@@ -157,7 +157,7 @@ public class AuthenticationExtensionFilter extends SpringSecurityFilter implemen
 				String refinedURI = rebuiltURL.replace("autologin=true&", "");
 				logger.info("redirect URI = " + refinedURI);				
 				// Why a redirect? it is the best way to deal with unwanted 
-				// filter chain's interaction when acccessing URL behind /plugin, /api, etc...
+				// filter chain's interactions when acccessing URL behind /plugin, /api, etc...
 				response.sendRedirect(refinedURI);
 			}
 			catch (NoClassDefFoundError e)
