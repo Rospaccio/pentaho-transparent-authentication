@@ -7,9 +7,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.merka.pentaho.ext.exception.ExternalAppNotMappedException;
 import org.merka.pentaho.ext.exception.LoginTicketNotFoundException;
+import org.merka.pentaho.ext.service.InMemoryUsernameProvider;
+import org.merka.pentaho.ext.service.UsernameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,8 +26,16 @@ public class LoginTicketManagerTest
 	@Autowired
 	private LoginTicketManager manager;
 
+	@Before
+	public void addMappings()
+	{
+		InMemoryUsernameProvider usernameProvider = new InMemoryUsernameProvider();
+		usernameProvider.addMapping("test", "testUser", "testUser");
+		manager.setUsernameProvider(usernameProvider);
+	}
+
 	@Test
-	public void testCreateNewTicket() throws LoginTicketNotFoundException
+	public void testCreateNewTicket() throws LoginTicketNotFoundException, ExternalAppNotMappedException
 	{
 		assertNotNull(manager);
 		LoginTicket ticket = manager.generateNewTicket("test", "testUser");
@@ -41,7 +53,7 @@ public class LoginTicketManagerTest
 	}
 
 	@Test
-	public void testGetSize() throws LoginTicketNotFoundException
+	public void testGetSize() throws LoginTicketNotFoundException, ExternalAppNotMappedException
 	{
 		ArrayList<String> toRemove = new ArrayList<>();
 		long initialSize = manager.getSize();
@@ -52,8 +64,8 @@ public class LoginTicketManagerTest
 			assertEquals(i + 1 + initialSize, manager.getSize());
 			toRemove.add(ticket.getIdAsString());
 		}
-		
-		for(String id : toRemove)
+
+		for (String id : toRemove)
 		{
 			manager.removeTicket(id);
 		}
@@ -61,7 +73,7 @@ public class LoginTicketManagerTest
 	}
 
 	@Test
-	public void testDeleteExpired()
+	public void testDeleteExpired() throws ExternalAppNotMappedException
 	{
 		int oldValidity = manager.getTicketValiditySeconds();
 		manager.setTicketValiditySeconds(0);
@@ -76,5 +88,11 @@ public class LoginTicketManagerTest
 		manager.deleteExpired();
 		assertEquals(0, manager.getSize());
 		manager.setTicketValiditySeconds(oldValidity);
+	}
+
+	@Test(expected = ExternalAppNotMappedException.class)
+	public void testGenerateTicketWithWrongApp() throws ExternalAppNotMappedException
+	{
+		manager.generateNewTicket("IdoNOTexist", "doesntREALLYmatter");
 	}
 }

@@ -8,7 +8,7 @@
 
 	<bean id="extPropertiyPlaceholderConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="pentaho-authentication-ext.properties"></property>
+		<property name="location" value="pentaho-transparent-authentication.properties"></property>
 		<property name="placeholderPrefix" value="$ext{"></property>
 	</bean>
 
@@ -21,6 +21,7 @@
 	</bean>
 	
 	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton">
+		<property name="usernameProvider" ref="usernameProvider"></property>
 		<property name="ticketValiditySeconds" value="$ext{ticket.validity.duration.seconds}"></property>
 	</bean>
 
@@ -63,9 +64,9 @@
 				<![CDATA[CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 		        PATTERN_TYPE_APACHE_ANT
 		        /webservices/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
-		        /api/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
-		        /plugin/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
-		        /**=loginTicketGeneratorFilter,securityContextHolderAwareRequestFilter,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,httpSessionReuseDetectionFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor]]>
+		        /api/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
+		        /plugin/**=securityContextHolderAwareRequestFilterForWS,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,anonymousProcessingFilter,exceptionTranslationFilterForWS,filterInvocationInterceptorForWS
+		        /**=securityContextHolderAwareRequestFilter,httpSessionPentahoSessionContextIntegrationFilter,httpSessionContextIntegrationFilter,httpSessionReuseDetectionFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,requestParameterProcessingFilter,authenticationExtensionFilter,loginTicketGeneratorFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor]]>
 			</value>
 		</property>
 	</bean>

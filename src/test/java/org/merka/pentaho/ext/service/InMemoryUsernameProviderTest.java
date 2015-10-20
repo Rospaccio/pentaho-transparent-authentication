@@ -76,7 +76,7 @@ public class InMemoryUsernameProviderTest
 	@Test
 	public void testLoadJsonMappings() throws JsonParseException, JsonMappingException, IOException
 	{
-		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("mappings.json");
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("pentaho-transparent-authentication-mappings.json");
 		assertNotNull(stream);
 		
 		InMemoryUsernameProvider provider = new InMemoryUsernameProvider();
@@ -98,4 +98,10 @@ public class InMemoryUsernameProviderTest
 		assertEquals("tiffany", pentahoUser);
 	}
 	
+//	@Test
+//	public void testIsAppNameMapped()
+//	{
+//		boolean result = inMemoryProvider.is
+//	}
+
 }

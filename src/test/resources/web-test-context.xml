@@ -5,11 +5,15 @@
        http://www.pentaho.com/schema/pentaho-system http://www.pentaho.com/schema/pentaho-system.xsd"
 	default-lazy-init="true">
 
-	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager"></bean>
 
 	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.InMemoryUsernameProvider">
 	
 	</bean>
+	
+	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager">
+		<property name="usernameProvider" ref="usernameProvider"></property>
+	</bean>
+
 	
 	<bean id="userRoleDao" class="org.merka.pentaho.ext.service.MockUserRoleDao"></bean>
 

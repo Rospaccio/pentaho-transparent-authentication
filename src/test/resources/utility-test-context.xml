@@ -5,7 +5,10 @@
        http://www.pentaho.com/schema/pentaho-system http://www.pentaho.com/schema/pentaho-system.xsd"
 	default-lazy-init="true">
 
+	<bean id="usernameProvider" class="org.merka.pentaho.ext.service.InMemoryUsernameProvider"></bean>
+
 	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager">
+		<property name="usernameProvider" ref="usernameProvider"></property>
 		<property name="ticketValiditySeconds" value="100"></property>
 	</bean>
 

@@ -26,4 +26,11 @@ public interface UsernameProvider {
 	 */
 	public String getUsername(String externalApplicationName, String externalUsername);
 	
+	/**
+	 * Tells if {@code externalAppName} corresponds to a mapped application
+	 * in this {@code UsernameProvider}. 
+	 * @param externalAppName The name of the external application.
+	 * @return {@code true}, if {@code externalAppName} is found in the internal mappings, {@code false} otherwise.
+	 */
+	public boolean isAppNameMapped(String externalAppName);
 }

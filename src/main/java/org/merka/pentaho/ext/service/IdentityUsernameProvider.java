@@ -9,4 +9,10 @@ public class IdentityUsernameProvider implements UsernameProvider
 		return externalUsername;
 	}
 
+	@Override
+	public boolean isAppNameMapped(String externalAppName)
+	{
+		return true;
+	}
+
 }
