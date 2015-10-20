@@ -90,7 +90,7 @@ public class InMemoryUsernameProviderTest
 	@Test
 	public void testLoadJsonMappingsFromFile() throws JsonParseException, JsonMappingException, IOException
 	{
-		String filename = "D:\\biserver-ce-6.0-preview\\pentaho-solutions\\system\\mappings.json";
+		String filename = "/Users/merka/workspace-mars/pentaho-transparent-authentication-lib/src/test/resources/mappings.json";
 		inMemoryProvider.loadJsonMappingsFromFile(filename);
 		
 		String pentahoUser = inMemoryProvider.getUsername("showcase", "user0.3");

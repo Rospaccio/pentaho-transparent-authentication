@@ -12,15 +12,15 @@
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<pentaho.platform.version>5.4.0.1-130</pentaho.platform.version>
+		<pentaho.platform.version>6.0.0.0-353</pentaho.platform.version>
 		<pentaho.5.4.joda-time.version>1.6</pentaho.5.4.joda-time.version>
 
 		<!-- Spring -->
-		<spring-framework.version>2.5.6</spring-framework.version>
-		<spring.security.core.version>2.0.5.RELEASE</spring.security.core.version>
+		<spring-framework.version>3.2.14.RELEASE</spring-framework.version>
+		<spring.security.core.version>2.0.8.RELEASE</spring.security.core.version>
 
 		<!-- Test -->
-		<junit.version>4.4</junit.version>
+		<junit.version>4.11</junit.version>
 		<jackson.version>1.9.3</jackson.version>
 
 	</properties>
@@ -34,6 +34,18 @@
 	</repositories>
 
 	<dependencies>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+			
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>		
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -44,6 +56,12 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring.security.core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -75,6 +93,10 @@
 					<groupId>org.apache.xbean</groupId>
 					<artifactId>xbean</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -85,6 +107,10 @@
 				<exclusion>
 					<groupId>org.apache.xbean</groupId>
 					<artifactId>xbean</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -97,30 +123,38 @@
 					<groupId>org.apache.xbean</groupId>
 					<artifactId>xbean</artifactId>
 				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>pentaho</groupId>
-			<artifactId>pentaho-platform-extensions</artifactId>
-			<version>${pentaho.platform.version}</version>
-			<exclusions>
 				<exclusion>
-					<groupId>org.apache.xbean</groupId>
-					<artifactId>xbean</artifactId>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>pentaho</groupId>
-			<artifactId>pentaho-user-console</artifactId>
-			<version>${pentaho.platform.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.xbean</groupId>
-					<artifactId>xbean</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>pentaho</groupId> -->
+<!-- 			<artifactId>pentaho-platform-extensions</artifactId> -->
+<!-- 			<version>${pentaho.platform.version}</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.apache.xbean</groupId> -->
+<!-- 					<artifactId>xbean</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>pentaho</groupId> -->
+<!-- 			<artifactId>pentaho-user-console</artifactId> -->
+<!-- 			<version>${pentaho.platform.version}</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.apache.xbean</groupId> -->
+<!-- 					<artifactId>xbean</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework</groupId> -->
+<!-- 					<artifactId>spring-beans</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 
 		<!-- Test Artifacts -->
 		<dependency>
