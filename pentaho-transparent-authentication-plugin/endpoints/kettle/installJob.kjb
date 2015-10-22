@@ -16,6 +16,11 @@
             <default_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x24;&#x7b;file.separator&#x7d;..&#x24;&#x7b;file.separator&#x7d;..&#x24;&#x7b;file.separator&#x7d;..&#x24;&#x7b;file.separator&#x7d;..&#x24;&#x7b;file.separator&#x7d;..</default_value>
             <description>Base directory of the pentaho installation</description>
         </parameter>
+        <parameter>
+            <name>project.version</name>
+            <default_value>1.0</default_value>
+            <description>Pentaho Transparent Authentication version number</description>
+        </parameter>
     </parameters>
     <slaveservers>
     </slaveservers>
@@ -66,7 +71,7 @@
       <filename/>
       <fields>
         <field>
-          <name>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x24;&#x7b;file.separator&#x7d;lib&#x24;&#x7b;file.separator&#x7d;pentaho-transparent-authentication-lib-0.1.jar</name>
+          <name>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x24;&#x7b;file.separator&#x7d;lib&#x24;&#x7b;file.separator&#x7d;pentaho-transparent-authentication-lib-&#x24;&#x7b;project.version&#x7d;.jar</name>
         </field>
         <field>
           <name>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x24;&#x7b;file.separator&#x7d;system&#x24;&#x7b;file.separator&#x7d;pentaho-transparent-authentication.properties</name>
@@ -109,7 +114,7 @@
       <create_destination_folder>N</create_destination_folder>
       <fields>
         <field>
-          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;lib&#x2f;pentaho-transparent-authentication-lib-0.1.jar</source_filefolder>
+          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;lib&#x2f;pentaho-transparent-authentication-lib-&#x24;&#x7b;project.version&#x7d;.jar</source_filefolder>
           <source_configuration_name>LOCAL-SOURCE-FILE-0</source_configuration_name>
           <destination_filefolder>&#x24;&#x7b;pentahoBaseDir&#x7d;&#x24;&#x7b;file.separator&#x7d;tomcat&#x24;&#x7b;file.separator&#x7d;webapps&#x24;&#x7b;file.separator&#x7d;pentaho&#x24;&#x7b;file.separator&#x7d;WEB-INF&#x24;&#x7b;file.separator&#x7d;lib</destination_filefolder>
           <destination_configuration_name>STATIC-DEST-FILE-0</destination_configuration_name>
