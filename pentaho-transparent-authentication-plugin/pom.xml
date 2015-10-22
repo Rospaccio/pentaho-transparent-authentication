@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.merka.pentaho.ext</groupId>
+	<artifactId>pentaho-trasparent-authentication</artifactId>
+	<version>0.1</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<pentaho-transparent-authentication-lib.version>0.1</pentaho-transparent-authentication-lib.version>
+		<java-lib-project>../pentaho-authentication-ext</java-lib-project>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.merka.pentaho.ext</groupId>
+			<artifactId>pentaho-transparent-authentication-lib</artifactId>
+			<version>${pentaho-transparent-authentication-lib.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-distribution</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>assembly/pentaho-transparent-authentication.xml</descriptor>
+							</descriptors>
+							<finalName>PentahoTransparentAuthentication</finalName>
+						</configuration>
+<!-- 						<configuration> -->
+<!-- 	                       <descriptorRefs> -->
+<!-- 	                           <descriptorRef>project</descriptorRef> -->
+<!-- 	                       </descriptorRefs>                                 -->
+<!-- 	                   </configuration> -->
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

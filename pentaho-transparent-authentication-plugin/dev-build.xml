@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pentaho-transparent-authentication-plugin" default="deploy-unpack">
+	<description>Deploy utility for a development environment</description>
+	<property file="dev-build.properties"></property>
+	
+	<target name="delete-deploy-dir">
+		<delete dir="${plugin.deploy.dir}"></delete>
+	</target>
+	
+	<target name="deploy-unpack" depends="delete-deploy-dir">
+		<unzip dest="${pentaho.system.dir}" src="${artifact}"></unzip>
+	</target>
+	
+	<target name="overwrite-sources">
+		<!-- Copies files back from pentaho to the project folder. 
+		Useful when files like the dashboards' ones are modified with the Pentaho web editor -->
+		<copy todir="." verbose="true">
+			<fileset dir="${plugin.deploy.dir}">
+				<exclude name="**/*.jar"/>
+				<exclude name="**/system/**"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="recover-beans">
+		<copy file="${pentaho.system.dir}/pentaho-spring-beans.xml.bak" tofile="${pentaho.system.dir}/pentaho-spring-beans.xml"
+			overwrite="true">
+		</copy>
+	</target>
+	
+	<target name="uninstall-full" depends="recover-beans">
+		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication.xml"></delete>
+		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication.properties"></delete>
+		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication-mappings.json"></delete>
+		<delete file="${pentaho.webapp.lib}/pentaho-transparent-authentication-lib-0.1.jar"></delete>
+	</target>
+	
+</project>

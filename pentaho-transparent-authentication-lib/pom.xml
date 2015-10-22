@@ -1,0 +1,160 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.merka.pentaho.ext</groupId>
+	<artifactId>pentaho-transparent-authentication-lib</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
+
+	<properties>
+
+		<!-- Generic properties -->
+		<java.version>1.7</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<pentaho.platform.version>5.4.0.1-130</pentaho.platform.version>
+		<pentaho.5.4.joda-time.version>1.6</pentaho.5.4.joda-time.version>
+
+		<!-- Spring -->
+		<spring-framework.version>2.5.6</spring-framework.version>
+		<spring.security.core.version>2.0.5.RELEASE</spring.security.core.version>
+
+		<!-- Test -->
+		<junit.version>4.4</junit.version>
+		<jackson.version>1.9.3</jackson.version>
+
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>pentaho-omni</id>
+			<name>pentaho omni</name>
+			<url>http://repository.pentaho.org/content/groups/omni</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${pentaho.5.4.joda-time.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-core</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-api</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-repository</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-platform-extensions</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>pentaho-user-console</artifactId>
+			<version>${pentaho.platform.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xbean</groupId>
+					<artifactId>xbean</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Test Artifacts -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-framework.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources/pentaho-solutions/system</directory>
+				<targetPath>../pentaho-solutions/system</targetPath>
+			</resource>
+		</resources>
+
+	</build>
+</project>
