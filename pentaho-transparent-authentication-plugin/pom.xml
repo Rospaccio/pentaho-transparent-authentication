@@ -21,6 +21,12 @@
 			<groupId>org.merka.pentaho.ext</groupId>
 			<artifactId>pentaho-transparent-authentication-lib</artifactId>
 			<version>${pentaho-transparent-authentication-lib.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jvnet.staxex</groupId>
+					<artifactId>stax-ex</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
