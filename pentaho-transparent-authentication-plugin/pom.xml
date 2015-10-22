@@ -2,12 +2,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.merka.pentaho.ext</groupId>
-	<artifactId>pentaho-trasparent-authentication</artifactId>
-	<version>0.1</version>
+	<artifactId>pentaho-trasparent-authentication-plugin</artifactId>
+	<version>1.0</version>
+	<parent>
+		<groupId>org.merka.pentaho.ext</groupId>
+		<artifactId>pentaho-transparent-authentication</artifactId>
+		<version>1.0</version>
+	</parent>
 	<packaging>pom</packaging>
 
 	<properties>
-		<pentaho-transparent-authentication-lib.version>0.1</pentaho-transparent-authentication-lib.version>
+		<pentaho-transparent-authentication-lib.version>${project.version}</pentaho-transparent-authentication-lib.version>
 		<java-lib-project>../pentaho-authentication-ext</java-lib-project>
 	</properties>
 

@@ -32,7 +32,10 @@
 		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication.xml"></delete>
 		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication.properties"></delete>
 		<delete file="${pentaho.system.dir}/pentaho-transparent-authentication-mappings.json"></delete>
-		<delete file="${pentaho.webapp.lib}/pentaho-transparent-authentication-lib-0.1.jar"></delete>
+		<delete file="${pentaho.webapp.lib}/${lib.jar.name}"></delete>
+		
+		<!-- and now delete the plugin folder. Was she thinking she was special? -->
+		<delete dir="${pentaho.system.dir}/PentahoTrasparentAuthentication"></delete>
 	</target>
 	
 </project>
