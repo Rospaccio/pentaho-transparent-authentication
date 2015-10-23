@@ -4,7 +4,7 @@
 	<groupId>org.merka.pentaho.ext</groupId>
 	<artifactId>pentaho-transparent-authentication-lib</artifactId>
 	<version>pentaho6-0.1</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<properties>
 
@@ -32,163 +32,14 @@
 			<url>http://repository.pentaho.org/content/groups/omni</url>
 		</repository>
 	</repositories>
+	
+	<modules>
+		<module>
+			pentaho-transparent-authentication-lib
+		</module>
+		<module>
+			pentaho-transparent-authentication-plugin
+		</module>
+	</modules>
 
-	<dependencies>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-			
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>		
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${spring.security.core.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>${pentaho.5.4.joda-time.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>pentaho</groupId>
-			<artifactId>pentaho-platform-core</artifactId>
-			<version>${pentaho.platform.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.xbean</groupId>
-					<artifactId>xbean</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>pentaho</groupId>
-			<artifactId>pentaho-platform-api</artifactId>
-			<version>${pentaho.platform.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.xbean</groupId>
-					<artifactId>xbean</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>pentaho</groupId>
-			<artifactId>pentaho-platform-repository</artifactId>
-			<version>${pentaho.platform.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.xbean</groupId>
-					<artifactId>xbean</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>pentaho</groupId> -->
-<!-- 			<artifactId>pentaho-platform-extensions</artifactId> -->
-<!-- 			<version>${pentaho.platform.version}</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.apache.xbean</groupId> -->
-<!-- 					<artifactId>xbean</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>pentaho</groupId> -->
-<!-- 			<artifactId>pentaho-user-console</artifactId> -->
-<!-- 			<version>${pentaho.platform.version}</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.apache.xbean</groupId> -->
-<!-- 					<artifactId>xbean</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.springframework</groupId> -->
-<!-- 					<artifactId>spring-beans</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
-
-		<!-- Test Artifacts -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-
-		<resources>
-			<resource>
-				<directory>src/main/resources/pentaho-solutions/system</directory>
-				<targetPath>../pentaho-solutions/system</targetPath>
-			</resource>
-		</resources>
-
-	</build>
 </project>

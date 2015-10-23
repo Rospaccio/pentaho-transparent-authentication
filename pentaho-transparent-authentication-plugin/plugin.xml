@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin title="PentahoTransparentAuthentication" loader="DEFAULT">
+<overlays>
+		<overlay id="startup.PentahoTransparentAuthentication" resourcebundle="content/PentahoTransparentAuthentication/resources/lang/messages">
+			<menubar id="toolsmenu">
+	        	<menuitem id="PentahoTransparentAuthentication" label="${Launcher.PentahoTransparentAuthentication}" command="mantleXulHandler.openUrl('${Launcher.PentahoTransparentAuthentication}','${Launcher.PentahoTransparentAuthentication_TOOLTIP}','plugin/PentahoTransparentAuthentication/api/default')"/>
+	      	</menubar>
+	    </overlay>
+	</overlays>
+	<lifecycle-listener class="pt.webdetails.cpk.CpkLifecycleListener"/>
+	<static-paths>
+		<static-path url="/PentahoTransparentAuthentication/static" localFolder="static"/>
+		<static-path url="/PentahoTransparentAuthentication/resources" localFolder="resources"/>
+	</static-paths>
+	<content-types>
+		<content-type>
+			<title>PentahoTransparentAuthentication</title>
+			<description></description>
+			<company name="" url="" logo="@PLUGIN_COMPANY_LOGO@"></company>
+		</content-type>
+	</content-types>
+	<content-generator
+		id="PentahoTransparentAuthentication"
+		title="PentahoTransparentAuthentication"
+		type="PentahoTransparentAuthentication"
+		class="pt.webdetails.cpk.CpkContentGenerator"/>
+	<!-- Menu entry -->
+	<menu-items>
+		<!--<menu-item id="PentahoTransparentAuthentication_main" anchor="tools-submenu" label="PentahoTransparentAuthentication" command="content/PentahoTransparentAuthentication/" type="MENU_ITEM" how="LAST_CHILD"/>-->
+	</menu-items>
+</plugin>

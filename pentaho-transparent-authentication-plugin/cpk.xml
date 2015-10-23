@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpk>
+    <elementTypes defaultElement="main">
+        <elementType name="Dashboard" class="pt.webdetails.cpk.elements.impl.DashboardElement">
+            <elementLocations>
+                <elementLocation path="dashboards/admin" isRecursive="true" pattern=".*\.wcdf" adminOnly="true"/>
+                <elementLocation path="dashboards/" isRecursive="true" pattern=".*\.wcdf" adminOnly="false"/>
+            </elementLocations>
+        </elementType>
+        <elementType name="Kettle" class="pt.webdetails.cpk.elements.impl.KettleJobElement">
+            <elementLocations>
+                <elementLocation path="endpoints/kettle/admin" isRecursive="true" pattern=".*\.kjb" adminOnly="true"/>
+                <elementLocation path="endpoints/kettle/" isRecursive="true" pattern=".*\.kjb" adminOnly="false"/>
+            </elementLocations>
+        </elementType>
+        <elementType name="Kettle" class="pt.webdetails.cpk.elements.impl.KettleTransformationElement">
+            <elementLocations>
+                <elementLocation path="endpoints/kettle/admin" isRecursive="true" pattern=".*\.ktr" adminOnly="true"/>
+                <elementLocation path="endpoints/kettle/" isRecursive="true" pattern=".*\.ktr" adminOnly="false"/>
+            </elementLocations>
+        </elementType>
+    </elementTypes> 
+    <info>
+        <CPK_version>5</CPK_version>
+        <description>Pentaho Transparent Authentication is a plugin for Pentaho BA Server that provides the platform with additional authentication and login capabilities.</description>
+        <name>PentahoTransparentAuthentication</name>
+        <author_email>alberto.mercati@gmail.com</author_email>
+        <author_name>Alberto Mercati and Francesco Corti</author_name>
+        <company_url>https://codevomit.wordpress.com/</company_url>
+        <creation_date>2015-11-07</creation_date>
+        <version>1.0</version>
+    </info>
+</cpk> 
