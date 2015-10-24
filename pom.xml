@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.merka.pentaho.ext</groupId>
 	<artifactId>pentaho-transparent-authentication</artifactId>
-	<version>pentaho6-0.1</version>
+	<version>1.1</version>
 	<packaging>pom</packaging>
 
 	<properties>
 
 		<!-- Generic properties -->
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<pentaho.platform.version>6.0.0.0-353</pentaho.platform.version>
