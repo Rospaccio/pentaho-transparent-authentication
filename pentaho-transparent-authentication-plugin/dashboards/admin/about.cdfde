@@ -582,7 +582,7 @@
      },
      {
       "name": "html",
-      "value": "<footer class=\"footer\">@2015-2016 Alberto Mercati, Francesco Corti</footer> ",
+      "value": "<footer class=\"footer\">&copy; 2015-2016 Alberto Mercati, Francesco Corti</footer> ",
       "type": "Html"
      },
      {
