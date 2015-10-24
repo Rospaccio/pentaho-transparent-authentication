@@ -18,7 +18,7 @@
         </parameter>
         <parameter>
             <name>project.version</name>
-            <default_value>1.0</default_value>
+            <default_value>1.1</default_value>
             <description>Pentaho Transparent Authentication version number</description>
         </parameter>
     </parameters>
