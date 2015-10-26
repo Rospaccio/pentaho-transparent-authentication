@@ -1,5 +1,5 @@
 language: java
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -X
+install: mvn package -DskipTests=true -Dmaven.javadoc.skip=true -B -V -X
 before_install:
   - mkdir -p endpoints/kettle/lib/
   - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/lib
