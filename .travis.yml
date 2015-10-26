@@ -1,1 +1,5 @@
 language: java
+
+before_install:
+  - mkdir -p endpoints/kettle/lib/
+  - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/lib
