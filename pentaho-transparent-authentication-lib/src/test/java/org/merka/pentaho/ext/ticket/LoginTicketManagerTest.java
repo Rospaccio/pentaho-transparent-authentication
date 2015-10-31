@@ -35,7 +35,7 @@ public class LoginTicketManagerTest
 	}
 
 	@Test
-	public void testCreateNewTicket() throws LoginTicketNotFoundException, ExternalAppNotMappedException
+	public void testGenerateNewTicket() throws LoginTicketNotFoundException, ExternalAppNotMappedException
 	{
 		assertNotNull(manager);
 		LoginTicket ticket = manager.generateNewTicket("test", "testUser");
@@ -50,6 +50,21 @@ public class LoginTicketManagerTest
 		assertEquals(ticket.getRequestingApplicationUsername(), removed.getRequestingApplicationUsername());
 		assertEquals(ticket.getValidityDuration(), removed.getValidityDuration());
 		assertEquals(0, manager.getSize());
+	}
+	
+	@Test
+	public void testGenerateTicketsOverThreshold() throws ExternalAppNotMappedException
+	{
+		int oldValidity = manager.getTicketValiditySeconds();
+		int testLimit = LoginTicketManager.TICKETS_CLEANING_THRESHOLD * 3;
+		manager.setTicketValiditySeconds(0);
+		for(int i = 0; i < testLimit; i++ )
+		{
+			manager.generateNewTicket("test", "testUser");
+			long size = manager.getSize();
+			assertTrue("Size = " + size, size <= LoginTicketManager.TICKETS_CLEANING_THRESHOLD);
+		}
+		manager.setTicketValiditySeconds(oldValidity);
 	}
 
 	@Test
@@ -77,6 +92,7 @@ public class LoginTicketManagerTest
 	{
 		int oldValidity = manager.getTicketValiditySeconds();
 		manager.setTicketValiditySeconds(0);
+		manager.resetTickets();
 		assertEquals(0, manager.getSize());
 		int i = 0;
 		for (; i < 100; i++)
@@ -84,7 +100,6 @@ public class LoginTicketManagerTest
 			manager.generateNewTicket("test", "testUser");
 		}
 
-		assertEquals(i + 0, manager.getSize());
 		manager.deleteExpired();
 		assertEquals(0, manager.getSize());
 		manager.setTicketValiditySeconds(oldValidity);

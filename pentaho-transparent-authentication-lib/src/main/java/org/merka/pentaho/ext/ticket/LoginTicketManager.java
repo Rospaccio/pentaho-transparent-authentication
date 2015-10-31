@@ -15,6 +15,8 @@ public class LoginTicketManager
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(LoginTicketManager.class);
 
 	public static final int DEFAULT_TICKET_VALIDITY_SECONDS = 100;
+
+	public static final int TICKETS_CLEANING_THRESHOLD = 200;
 	private Map<String, LoginTicket> tickets;
 
 	private int ticketValiditySeconds;
@@ -64,10 +66,20 @@ public class LoginTicketManager
 			logger.warn("WARN! ticket validity is <= 0 [value = " + getTicketValiditySeconds() + "]");
 		}
 		
-		// TODO: is this ok here?
-		// deleteExpired();
+		// preemptively removes expired tickets if their number is over the threshold. 
+		try
+		{
+			if(tickets.size() >= TICKETS_CLEANING_THRESHOLD)
+			{
+				this.deleteExpired();
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error("An error has occurred while trying to remove expired tickets", e);
+		}
 		
-		// checks if the provided external app name is mapped to something internally
+		// checks if the provided external application name is mapped to something internally
 		if(!getUsernameProvider().isAppNameMapped(requestingApplicationName))
 		{
 			throw new ExternalAppNotMappedException(requestingApplicationName);
@@ -131,9 +143,22 @@ public class LoginTicketManager
 
 	public long getSize()
 	{
-		return tickets.size();
+		long size;
+		synchronized (tickets)
+		{
+			size = tickets.size();
+		}
+		return size;
 	}
 
+	/**
+	 * Deletes all the tickets and restore the initial condition
+	 */
+	public void resetTickets()
+	{
+		tickets = new HashMap<String, LoginTicket>();
+	}
+	
 	// public boolean getTicketById(String ticketId)
 	// {
 	// LoginTicket found = null;
