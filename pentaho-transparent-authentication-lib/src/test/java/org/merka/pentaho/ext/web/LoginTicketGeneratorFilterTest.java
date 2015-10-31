@@ -65,7 +65,6 @@ public class LoginTicketGeneratorFilterTest
 
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 
-		assertNotNull(response);
 		assertEquals(200, response.getStatus());
 		String content = response.getContentAsString();
 		assertNotNull(content);
@@ -109,8 +108,8 @@ public class LoginTicketGeneratorFilterTest
 
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 
-		assertNotNull(response);
 		assertEquals(500, response.getStatus());
+		assertNotNull(response.getErrorMessage());
 	}
 
 	@Test
@@ -131,7 +130,27 @@ public class LoginTicketGeneratorFilterTest
 
 		loginTicketGeneratorFilter.doFilter(request, response, chain);
 
-		assertNotNull(response);
 		assertEquals(500, response.getStatus());
+		assertNotNull(response.getErrorMessage());
+	}
+	
+	@Test
+	public void testDoFilterNoAuthentication() throws IOException, ServletException
+	{
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		MockFilterChain chain = new MockFilterChain();
+		
+		SecurityContextHolder.getContext().setAuthentication(null);
+		
+		request.addParameter(LoginTicketGeneratorFilter.GENERATE_TICKET_PARAM_NAME, "1");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_APP_PARAM_NAME, "test");
+		request.addParameter(LoginTicketGeneratorFilter.REQUESTING_USERNAME_PARAM_NAME, "testUser");
+		
+		loginTicketGeneratorFilter.doFilter(request, response, chain);
+
+		assertEquals(500, response.getStatus());
+		assertNotNull(response.getErrorMessage());
+		assertEquals(LoginTicketGeneratorFilter.MISSING_AUTH_ERROR_MESSAGE, response.getErrorMessage());
 	}
 }

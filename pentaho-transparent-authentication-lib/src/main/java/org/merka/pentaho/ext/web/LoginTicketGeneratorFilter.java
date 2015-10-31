@@ -31,6 +31,11 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 	public static final String REQUESTING_APP_PARAM_NAME = "app";
 	public static final String REQUESTING_USERNAME_PARAM_NAME = "username";
 	
+	public static final String MISSING_AUTH_ERROR_MESSAGE = "No authentication found in the security context: "
+			+ "authentication is mandatory to process this request. The request must carry a valid authentication. "
+			+ "Try sending the request with Basic authentication or with request parameter authentication "
+			+ "(the latter is disabled by default in Pentaho).";	
+	
 	LoginTicketManager loginTicketManager;
 	UsernameProvider usernameProvider;
 	
@@ -66,8 +71,9 @@ public class LoginTicketGeneratorFilter extends SpringSecurityFilter
 		{
 			if(SecurityContextHolder.getContext().getAuthentication() == null)
 			{
-				log.error("No authentication found: authentication is mandatory to process the request!");
-				sendError(response, "No authentication found: authentication is mandatory to process the request!");
+				
+				log.error(MISSING_AUTH_ERROR_MESSAGE);
+				sendError(response, MISSING_AUTH_ERROR_MESSAGE);
 				response.flushBuffer();
 				return;
 			}
