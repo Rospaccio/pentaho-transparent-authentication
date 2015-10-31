@@ -1,4 +1,4 @@
-## PentahoTransparentAuthentication
+## PentahoTransparentAuthentication [![Build Status](https://travis-ci.org/Rospaccio/pentaho-transparent-authentication.svg?branch=master)](https://travis-ci.org/Rospaccio/pentaho-transparent-authentication)
 
 Pentaho Transparent Authentication is a plugin for Pentaho BA Server that provides the platform with additional authentication and login capabilities, in the form of a spring security filter and a bunch of support classes. The goal of this project is to provide a transparent authentication and autologin mechanism, to let users switch between an external web application and Pentaho in an “Single Sign On" fashion.
 
