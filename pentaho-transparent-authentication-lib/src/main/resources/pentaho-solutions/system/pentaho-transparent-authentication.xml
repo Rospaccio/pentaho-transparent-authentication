@@ -23,6 +23,7 @@
 	<bean id="loginTicketManager" class="org.merka.pentaho.ext.ticket.LoginTicketManager" scope="singleton">
 		<property name="usernameProvider" ref="usernameProvider"></property>
 		<property name="ticketValiditySeconds" value="$ext{ticket.validity.duration.seconds}"></property>
+		<property name="ticketCountThreashold" value="$ext{ticket.count.threshold}"></property>
 	</bean>
 
 	<!-- ======================== AUTHENTICATION ======================= -->

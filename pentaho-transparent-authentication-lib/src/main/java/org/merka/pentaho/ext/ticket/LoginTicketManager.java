@@ -21,6 +21,17 @@ public class LoginTicketManager
 
 	private int ticketValiditySeconds;
 	private UsernameProvider usernameProvider;
+	private int ticketCountThreashold;
+
+	public int getTicketCountThreashold()
+	{
+		return ticketCountThreashold;
+	}
+
+	public void setTicketCountThreashold(int ticketCountThreashold)
+	{
+		this.ticketCountThreashold = ticketCountThreashold;
+	}
 
 	public int getTicketValiditySeconds()
 	{
@@ -69,7 +80,7 @@ public class LoginTicketManager
 		// preemptively removes expired tickets if their number is over the threshold. 
 		try
 		{
-			if(tickets.size() >= TICKETS_CLEANING_THRESHOLD)
+			if(tickets.size() >= getTicketCountThreashold())
 			{
 				this.deleteExpired();
 			}
@@ -123,7 +134,6 @@ public class LoginTicketManager
 				if (entry.getValue().isExpired())
 				{
 					idToRemove.add(entry.getValue().getIdAsString());
-
 				}
 			}
 
