@@ -1,6 +1,24 @@
 language: java
 install: mvn package -DskipTests=true -Dmaven.javadoc.skip=true -B -V -X
 before_install:
-  - mkdir -p endpoints/kettle/lib
-  - mkdir -p endpoints/kettle/system
-  - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/lib
+ - mkdir -p endpoints/kettle/lib
+ - mkdir -p endpoints/kettle/system
+ - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/lib
+ - mkdir -p PentahoTransparentAuthentication/build-res
+ - mkdir -p PentahoTransparentAuthentication/dashboards
+ - mkdir -p PentahoTransparentAuthentication/dashboards/admin/
+ - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/admin/
+ - mkdir -p PentahoTransparentAuthentication/endpoints/kettle/system/
+ - mkdir -p PentahoTransparentAuthentication/lib/
+ - mkdir -p PentahoTransparentAuthentication/resources/
+ - mkdir -p PentahoTransparentAuthentication/resources/lang/
+ - mkdir -p PentahoTransparentAuthentication/resources/styles/
+ - mkdir -p PentahoTransparentAuthentication/static/
+ - mkdir -p PentahoTransparentAuthentication/static/custom/
+ - mkdir -p PentahoTransparentAuthentication/static/custom/css/
+ - mkdir -p PentahoTransparentAuthentication/static/custom/img/
+ - mkdir -p PentahoTransparentAuthentication/static/custom/js/
+ - mkdir -p PentahoTransparentAuthentication/static/system/
+ - mkdir -p PentahoTransparentAuthentication/static/system/css/
+ - mkdir -p PentahoTransparentAuthentication/static/system/img/
+ - mkdir -p PentahoTransparentAuthentication/static/system/js/
