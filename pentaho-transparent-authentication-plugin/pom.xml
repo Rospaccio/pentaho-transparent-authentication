@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.merka.pentaho.ext</groupId>
 		<artifactId>pentaho-transparent-authentication</artifactId>
-		<version>${peroject.version}</version>
+		<version>1.0</version>
 	</parent>
 	<packaging>pom</packaging>
 
 	<properties>
 		<pentaho-transparent-authentication-lib.version>${project.version}</pentaho-transparent-authentication-lib.version>
-		<java-lib-project>../pentaho-authentication-ext</java-lib-project>
+		<java-lib-project>../pentaho-transparent-authentication-lib</java-lib-project>
 	</properties>
 
 	<dependencies>
