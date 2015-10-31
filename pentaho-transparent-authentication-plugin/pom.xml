@@ -46,6 +46,7 @@
 								<descriptor>assembly/pentaho-transparent-authentication.xml</descriptor>
 							</descriptors>
 							<finalName>PentahoTransparentAuthentication</finalName>
+							<skipAssembly>${travis.active}</skipAssembly>
 						</configuration>
 <!-- 						<configuration> -->
 <!-- 	                       <descriptorRefs> -->

@@ -32,7 +32,37 @@
 			<url>http://repository.pentaho.org/content/groups/omni</url>
 		</repository>
 	</repositories>
-	
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>env</name>
+					<value>default</value>
+				</property>
+			</activation>
+			<properties>
+				<profile.property.filename>default</profile.property.filename>
+				<travis.active>false</travis.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>travis</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>travis</value>
+				</property>
+			</activation>
+			<properties>
+				<profile.property.filename>travis</profile.property.filename>
+				<travis.active>true</travis.active>
+			</properties>
+		</profile>
+	</profiles>
+
 	<modules>
 		<module>
 			pentaho-transparent-authentication-lib
